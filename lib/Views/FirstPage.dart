@@ -1,183 +1,182 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:petsecom/genTextFormField.dart';
+import 'package:get/get.dart';
+import 'package:petsecom/Views/CartPage.dart';
+import 'package:petsecom/Views/ItemsWidget.dart';
+import 'package:petsecom/widgets/DrawerWidget.dart';
+import '../Controllers/MapsController.dart';
 
-import '../category_card.dart';
+import '../widgets/category_card.dart';
 
 class FirtsPage extends StatefulWidget {
-  const FirtsPage({super.key});
-
   @override
   State<FirtsPage> createState() => _FirtsPageState();
 }
 
 class _FirtsPageState extends State<FirtsPage> {
+  var controller = Get.put(MapsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerWidget(),
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
-        ),
-        title: const Text(
-          "App",
+        // leading: IconButton(
+        //   onPressed: () => Scaffold.of(context).openDrawer(),
+        //   icon: Builder(builder: (context) {
+        //     return Icon(
+        //       Icons.menu_rounded,
+        //       color: Colors.grey[700],
+        //     );
+        //   }),
+        // ),
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+        title: Text(
+          controller.address.value,
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[700]),
         ),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.trolley,
-            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return const CartPage();
+                }),
+              );
+            },
+            icon: Icon(Icons.shopping_bag_outlined, color: Colors.grey[700]),
           ),
         ],
-        leading: IconButton(
-          onPressed: () {},
-          icon: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-        ),
       ),
       backgroundColor: Colors.grey[100],
-      body: Padding(
+      body: ListView(
         padding: EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Hello",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextField(
-              style: TextStyle(color: Colors.grey[900]),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Hello",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                filled: true,
-                fillColor: Colors.grey[300],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide.none,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextField(
+                style: TextStyle(color: Colors.grey[900]),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[300],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintText: "Search...",
+                  suffixIcon: Icon(Icons.search),
+                  suffixIconColor: Colors.deepOrange[300],
                 ),
-                hintText: "Search...",
-                suffixIcon: Icon(Icons.search),
-                suffixIconColor: Colors.deepOrange[300],
               ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.blue[400],
-                borderRadius: BorderRadius.circular(20),
+              SizedBox(
+                height: 20.0,
               ),
-              child: Row(children: [
-                Container(
-                  height: 150,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('images/dasboard.PNG'),
-                      fit: BoxFit.fitHeight,
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue[400],
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(children: [
+                  Container(
+                    height: 150,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('images/dasboard.PNG'),
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        'Join Our Animal ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Join Our Animal ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
                   ),
+                ]),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Text(
+                'Categories ',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
-              ]),
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            Text(
-              'Categories ',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 60,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  CategoryCard(
-                    categoryName: 'Cat',
-                  ),
-                  CategoryCard(
-                    categoryName: 'DOG',
-                  ),
-                  CategoryCard(
-                    categoryName: 'DOG',
-                  ),
-                  CategoryCard(
-                    categoryName: 'DOG',
-                  ),
-                  CategoryCard(
-                    categoryName: 'DOG',
-                  ),
-                  CategoryCard(
-                    categoryName: 'DOG',
-                  ),
-                ],
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Categories ',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+              Container(
+                height: 50,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    CategoryCard(
+                      categoryName: 'List PetShop',
+                    ),
+                    CategoryCard(
+                      categoryName: 'List Item',
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Categories ',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              const ItemsWidget(),
+            ],
+          ),
+        ],
       ),
     );
   }

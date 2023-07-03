@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class AddAdnimal extends StatefulWidget {
-  const AddAdnimal({super.key});
+class AddAnimal extends StatefulWidget {
+  const AddAnimal({super.key});
   @override
-  State<AddAdnimal> createState() => _AddAdnimalState();
+  State<AddAnimal> createState() => _AddAnimalState();
 }
 
-class _AddAdnimalState extends State<AddAdnimal> {
+class _AddAnimalState extends State<AddAnimal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();

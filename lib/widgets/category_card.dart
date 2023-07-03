@@ -1,6 +1,5 @@
 // import 'package:adoptme/animal_list.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 // import 'List_Controller.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -22,7 +21,8 @@ class CategoryCard extends StatelessWidget {
           _bottomsheet(context);
         },
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          width: 150,
+          padding: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
@@ -89,12 +89,15 @@ class CategoryCard extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 5,
+              ),
               Divider(
-                color: Colors.grey[300],
+                color: Colors.grey[200],
                 thickness: 2,
                 indent: 10,
                 endIndent: 10,
-                height: 20,
+                height: 2,
               ),
             ],
           ),

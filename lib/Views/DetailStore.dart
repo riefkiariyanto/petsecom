@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:petsecom/Views/AddAnimal.dart';
-import 'package:petsecom/Views/DetailStore.dart';
+
 import '../Controllers/MapsController.dart';
-
 import 'CartPage.dart';
+import 'ItemsWidget.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class DeatailStore extends StatefulWidget {
+  const DeatailStore({super.key});
+
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<DeatailStore> createState() => _DeatailStoreState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _DeatailStoreState extends State<DeatailStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,47 +95,8 @@ scroll() {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Category",
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          "Brino",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Text(
-                      "\$ 55",
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontFamily: 'Gilroy',
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(
-                  height: 4,
-                ),
                 SizedBox(
-                  height: 10,
+                  height: 2,
                 ),
                 Row(
                   children: [
@@ -152,19 +113,11 @@ scroll() {
                       children: [
                         Row(
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            DeatailStore()));
-                              },
-                              child: Text(
-                                'Store',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            Text(
+                              "Store",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
@@ -200,61 +153,10 @@ scroll() {
                     height: 4,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Description",
-                      style: TextStyle(
-                          fontFamily: 'Gilroy',
-                          fontSize: 20,
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        "Kucing disebut juga kucing domestik atau kucing rumah (nama ilmiah: Felis silvestris catus atau Felis catus) adalah sejenis mamalia karnivora dari keluarga Felidae. Kata kucing biasanya merujuk kepada kucing yang telah dijinakkan, tetapi bisa juga merujuk kepada kucing besar seperti singa dan harimau.",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                  ],
-                ),
                 SizedBox(
                   height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 320,
-                        decoration: BoxDecoration(
-                          color: Colors.blue[600],
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [BoxShadow()],
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Add To Cart',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                const ItemsWidget(),
               ],
             ),
           ),

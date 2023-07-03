@@ -17,8 +17,8 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   List pages = [
     FirtsPage(),
-    AddAdnimal(),
-    ProfilePage(),
+    const AddAnimal(),
+    const ProfilePage(),
   ];
   void onTap(int index) {
     setState(() {
