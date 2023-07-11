@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petsecom/Constants/constants.dart';
 import 'package:petsecom/Controllers/auth.dart';
 import 'package:petsecom/Views/HomePage.dart';
 import 'package:petsecom/Views/RegisterPage.dart';
 import 'package:petsecom/genTextFormField.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -72,16 +74,10 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     child: GestureDetector(
                       onTap: () async {
-                        {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      HomePage()));
-                        }
-                        // await _authController.login(
-                        //   username: _usernameController.text.trim(),
-                        //   password: _passwordController.text.trim(),
-                        // );
+                        await _authController.login(
+                          username: _usernameController.text.trim(),
+                          password: _passwordController.text.trim(),
+                        );
                       },
                       child: Obx(() {
                         return _authController.isLoading.value

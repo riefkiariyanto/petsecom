@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../Views/MapsView.dart';
 
@@ -63,7 +64,7 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             title: Text('Exit'),
             leading: Icon(Icons.exit_to_app),
-            onTap: () => null,
+            onTap: () => SystemNavigator.pop(),
           ),
         ],
       ),

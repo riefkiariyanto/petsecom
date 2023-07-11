@@ -124,7 +124,7 @@ class _RegistePageState extends State<RegistePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    ' Punya akun  ',
+                    ' Have account ',
                     style: GoogleFonts.roboto(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -139,11 +139,10 @@ class _RegistePageState extends State<RegistePage> {
                     },
                     child: Text(
                       'Login Now',
-                      style: GoogleFonts.roboto(
-                        fontSize: 13,
-                        color: Colors.deepOrange[300],
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepOrange),
                     ),
                   ),
                 ],

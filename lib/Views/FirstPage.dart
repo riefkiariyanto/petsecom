@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:petsecom/Views/CartPage.dart';
 import 'package:petsecom/Views/ItemsWidget.dart';
@@ -17,167 +18,194 @@ class _FirtsPageState extends State<FirtsPage> {
   var controller = Get.put(MapsController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: DrawerWidget(),
-      appBar: AppBar(
-        // leading: IconButton(
-        //   onPressed: () => Scaffold.of(context).openDrawer(),
-        //   icon: Builder(builder: (context) {
-        //     return Icon(
-        //       Icons.menu_rounded,
-        //       color: Colors.grey[700],
-        //     );
-        //   }),
-        // ),
-        backgroundColor: Colors.transparent,
-        bottomOpacity: 0.0,
-        elevation: 0.0,
-        title: Text(
-          controller.address.value,
-          style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700]),
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return const CartPage();
-                }),
-              );
-            },
-            icon: Icon(Icons.shopping_bag_outlined, color: Colors.grey[700]),
-          ),
-        ],
-      ),
-      backgroundColor: Colors.grey[100],
-      body: ListView(
-        padding: EdgeInsets.all(16),
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Hello",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
+    return WillPopScope(
+        child: Scaffold(
+          drawer: DrawerWidget(),
+          appBar: AppBar(
+            // leading: IconButton(
+            //   onPressed: () => Scaffold.of(context).openDrawer(),
+            //   icon: Builder(builder: (context) {
+            //     return Icon(
+            //       Icons.menu_rounded,
+            //       color: Colors.grey[700],
+            //     );
+            //   }),
+            // ),
+            backgroundColor: Colors.transparent,
+            bottomOpacity: 0.0,
+            elevation: 0.0,
+            title: Text(
+              controller.address.value,
+              style: TextStyle(
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
-                ),
+                  color: Colors.grey[700]),
+            ),
+            centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return const CartPage();
+                    }),
+                  );
+                },
+                icon:
+                    Icon(Icons.shopping_bag_outlined, color: Colors.grey[700]),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                style: TextStyle(color: Colors.grey[900]),
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey[300],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  hintText: "Search...",
-                  suffixIcon: Icon(Icons.search),
-                  suffixIconColor: Colors.deepOrange[300],
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue[400],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(children: [
-                  Container(
-                    height: 150,
-                    width: 120,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('images/dasboard.PNG'),
-                        fit: BoxFit.fitHeight,
-                      ),
+            ],
+          ),
+          backgroundColor: Colors.grey[100],
+          body: ListView(
+            padding: EdgeInsets.all(16),
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Hello",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 20,
                   ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Join Our Animal ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                  TextField(
+                    style: TextStyle(color: Colors.grey[900]),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[300],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: "Search...",
+                      suffixIcon: Icon(Icons.search),
+                      suffixIconColor: Colors.deepOrange[300],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue[400],
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(children: [
+                      Container(
+                        height: 150,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('images/dasboard.PNG'),
+                            fit: BoxFit.fitHeight,
                           ),
                         ),
-                        SizedBox(
-                          height: 10,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Join Our Animal ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ]),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  Text(
+                    'Categories ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 50,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        CategoryCard(
+                          categoryName: 'List PetShop',
+                        ),
+                        CategoryCard(
+                          categoryName: 'List Item',
                         ),
                       ],
                     ),
                   ),
-                ]),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Text(
-                'Categories ',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 50,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    CategoryCard(
-                      categoryName: 'List PetShop',
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Categories ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    CategoryCard(
-                      categoryName: 'List Item',
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  const ItemsWidget(),
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Categories ',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              const ItemsWidget(),
             ],
           ),
-        ],
-      ),
-    );
+        ),
+        onWillPop: () async {
+          final value = await showDialog<bool>(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Alert'),
+                  content: const Text('Do you want to Exit'),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () => SystemNavigator.pop(),
+                      child: Text('Exit'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text('No'),
+                    ),
+                  ],
+                );
+              });
+          if (value != null) {
+            return Future.value(value);
+          } else {
+            return Future.value(false);
+          }
+        });
   }
 }
