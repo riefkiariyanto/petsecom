@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:petsecom/Constants/constants.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:petsecom/Views/HomePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   final isLoading = false.obs;
@@ -69,7 +70,7 @@ class AuthController extends GetxController {
         'username': username,
         'password': password,
       };
-
+      final prefs = await SharedPreferences.getInstance();
       var response = await http.post(
         Uri.parse('${url}login'),
         headers: {
@@ -82,6 +83,7 @@ class AuthController extends GetxController {
         isLoading.value = false;
         token.value = json.decode(response.body)['token'];
         box.write('token', token.value);
+        prefs.setBool('slogin', true);
         Get.offAll(() => const HomePage());
       } else {
         isLoading.value = false;

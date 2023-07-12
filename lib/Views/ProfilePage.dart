@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,7 +90,7 @@ logoutbtn(BuildContext context) {
       onTap: () async {
         final SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.remove('username');
+        sharedPreferences.remove('slogin');
         Get.to(LoginPage());
       },
       child: Container(
