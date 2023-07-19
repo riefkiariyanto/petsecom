@@ -1,5 +1,6 @@
 // import 'package:adoptme/animal_list.dart';
 import 'package:flutter/material.dart';
+import 'package:petsecom/widgets/list_toko.dart';
 // import 'List_Controller.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -74,6 +75,7 @@ class CategoryCard extends StatelessWidget {
       ),
       builder: (BuildContext context) {
         return Container(
+          width: MediaQuery.of(context).size.width,
           height: 450,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,6 +100,10 @@ class CategoryCard extends StatelessWidget {
                 indent: 10,
                 endIndent: 10,
                 height: 2,
+              ),
+              Container(
+                height: 130,
+                child: list_toko(),
               ),
             ],
           ),

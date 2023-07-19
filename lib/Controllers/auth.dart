@@ -84,6 +84,7 @@ class AuthController extends GetxController {
         token.value = json.decode(response.body)['token'];
         box.write('token', token.value);
         prefs.setBool('slogin', true);
+        prefs.setString('_data', response.body);
         Get.offAll(() => const HomePage());
       } else {
         isLoading.value = false;

@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:petsecom/Constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:petsecom/Views/CartPage.dart';
 import 'package:petsecom/Views/HomePage.dart';
 import 'package:petsecom/Views/LoginPage.dart';
+import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -16,6 +20,15 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final box = GetStorage();
+
+  Future getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    String _data;
+    _data = prefs.getString('_data') ?? '';
+
+    return json.decode(_data);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +77,9 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 10,
               ),
-              ProfileUser(),
+              ProfileUser(context),
               SizedBox(
                 height: 30,
-              ),
-              detailBio(),
-              SizedBox(
-                height: 40,
               ),
               logoutbtn(context),
             ],
@@ -115,55 +124,12 @@ logoutbtn(BuildContext context) {
   );
 }
 
-detailBio() {
-  return Container(
-    width: 350,
-    child: Card(
-      child: Column(
-        children: [
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text(''),
-          ),
-          Divider(
-            height: 2,
-            indent: 10,
-            endIndent: 10,
-          ),
-          ListTile(
-            leading: Icon(Icons.phone_iphone),
-            title: Text(''),
-          ),
-          Divider(
-            height: 2,
-            indent: 10,
-            endIndent: 10,
-          ),
-          ListTile(
-            leading: Icon(Icons.location_on),
-            title: Text(''),
-          ),
-          Divider(
-            height: 2,
-            indent: 10,
-            endIndent: 10,
-          ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text(''),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 profileImage() {
   return CircleAvatar(
     radius: 60,
     child: ClipOval(
       child: Image.network(
-        'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+        'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
         fit: BoxFit.cover,
         width: 120,
         height: 120,
@@ -172,23 +138,68 @@ profileImage() {
   );
 }
 
-ProfileUser() {
+ProfileUser(BuildContext context) {
+  Future getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    String _data;
+    _data = prefs.getString('_data') ?? '';
+
+    return json.decode(_data);
+  }
+
+  print("-------------------");
+
+  print(getUser());
+
   return Column(
     children: [
-      Text(
-        "user.name",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 24,
-        ),
-      ),
+      FutureBuilder(
+          future: getUser(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return (Text(
+                snapshot.data['user']['name'],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ));
+            } else {
+              return Text('Data eror');
+            }
+          }),
       SizedBox(
         height: 4,
       ),
-      Text(
-        "email@gmail.com",
-        style: TextStyle(color: Colors.grey),
-      )
+      FutureBuilder(
+          future: getUser(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return (Text(
+                snapshot.data['user']['email'],
+                style: TextStyle(color: Colors.grey),
+              ));
+            } else {
+              return Text('Data eror');
+            }
+          }),
+      SizedBox(
+        height: 4,
+      ),
+      // Text(
+      //   "",
+      //   style: TextStyle(
+      //     fontWeight: FontWeight.bold,
+      //     fontSize: 24,
+      //   ),
+      // ),
+      // SizedBox(
+      //   height: 4,
+      // ),
+      // Text(
+      //   'conte',
+      //   style: TextStyle(color: Colors.grey),
+      // )
     ],
   );
 }

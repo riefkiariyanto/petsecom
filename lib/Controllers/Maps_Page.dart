@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -9,29 +11,22 @@ class Maps_Page extends StatefulWidget {
 }
 
 class _Maps_PageState extends State<Maps_Page> {
-  late GoogleMapController mapController;
-  final LatLng initialPosition = LatLng(37.42796133580664, -122.085749655962);
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(-7.928334, 112.607303),
+    zoom: 14.0,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: initialPosition,
-          zoom: 14.0,
-        ),
+        initialCameraPosition: _kGooglePlex,
+        mapType: MapType.normal,
         onMapCreated: (GoogleMapController controller) {
-          mapController = controller;
-        },
-        markers: {
-          Marker(
-            markerId: MarkerId('marker_1'),
-            position: initialPosition,
-            infoWindow: InfoWindow(
-              title: 'Marker 1',
-              snippet: 'This is the first marker',
-            ),
-          ),
+          _controller.complete(controller);
         },
       ),
     );

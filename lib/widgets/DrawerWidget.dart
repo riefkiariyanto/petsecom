@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:petsecom/StatusOrder/StatusOrder.dart';
 
 import '../Views/MapsView.dart';
 
@@ -17,7 +18,7 @@ class DrawerWidget extends StatelessWidget {
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+                  'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
                   fit: BoxFit.cover,
                   width: 90,
                   height: 90,
@@ -41,10 +42,13 @@ class DrawerWidget extends StatelessWidget {
                 ));
               }),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Friends'),
-            onTap: () => null,
-          ),
+              leading: Icon(Icons.person),
+              title: Text('Friends'),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => StatuOrder(),
+                ));
+              }),
           ListTile(
             leading: Icon(Icons.notifications),
             title: Text('Request'),

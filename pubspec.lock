@@ -148,10 +148,10 @@ packages:
     dependency: transitive
     description:
       name: geocoding_android
-      sha256: "5a1fc0cec9b0497b44ca31c1fa8d1c891f3aded1053e6bb2eac075d3bd1bf046"
+      sha256: "609db1d71bc364dd9d0616f72a41c01e0c74f3a3807efb85e0d5a67e57baf50f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.2"
   geocoding_ios:
     dependency: transitive
     description:
@@ -565,6 +565,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  status_change:
+    dependency: "direct main"
+    description:
+      name: status_change
+      sha256: "6858b2e65c52e782da608b7291ae53d0431317a671d4718d81b63033c1d924c3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   stream_channel:
     dependency: transitive
     description:
