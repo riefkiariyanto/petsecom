@@ -147,59 +147,23 @@ ProfileUser(BuildContext context) {
     return json.decode(_data);
   }
 
-  print("-------------------");
-
-  print(getUser());
-
-  return Column(
-    children: [
-      FutureBuilder(
-          future: getUser(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return (Text(
-                snapshot.data['user']['name'],
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ));
-            } else {
-              return Text('Data eror');
-            }
-          }),
-      SizedBox(
-        height: 4,
-      ),
-      FutureBuilder(
-          future: getUser(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return (Text(
-                snapshot.data['user']['email'],
-                style: TextStyle(color: Colors.grey),
-              ));
-            } else {
-              return Text('Data eror');
-            }
-          }),
-      SizedBox(
-        height: 4,
-      ),
-      // Text(
-      //   "",
-      //   style: TextStyle(
-      //     fontWeight: FontWeight.bold,
-      //     fontSize: 24,
-      //   ),
-      // ),
-      // SizedBox(
-      //   height: 4,
-      // ),
-      // Text(
-      //   'conte',
-      //   style: TextStyle(color: Colors.grey),
-      // )
-    ],
-  );
+  return FutureBuilder(
+      future: getUser(),
+      builder: (context, snapshot) {
+        return Column(
+          children: [
+            Text(
+              snapshot.data['user']['name'],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              snapshot.data['user']['email'],
+              style: TextStyle(color: Colors.grey),
+            )
+          ],
+        );
+      });
 }

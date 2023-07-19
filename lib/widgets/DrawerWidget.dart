@@ -1,10 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:petsecom/StatusOrder/StatusOrder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Views/MapsView.dart';
 
 class DrawerWidget extends StatelessWidget {
+  Future getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    String _data;
+    _data = prefs.getString('_data') ?? '';
+    return json.decode(_data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -12,27 +22,31 @@ class DrawerWidget extends StatelessWidget {
         // Remove padding
         padding: EdgeInsets.zero,
         children: [
-          UserAccountsDrawerHeader(
-            accountName: Text('Oflutter.com'),
-            accountEmail: Text('example@gmail.com'),
-            currentAccountPicture: CircleAvatar(
-              child: ClipOval(
-                child: Image.network(
-                  'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
-                  fit: BoxFit.cover,
-                  width: 90,
-                  height: 90,
-                ),
-              ),
-            ),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              image: DecorationImage(
-                fit: BoxFit.contain,
-                image: AssetImage("images/dogb.png"),
-              ),
-            ),
-          ),
+          FutureBuilder(
+              future: getUser(),
+              builder: (context, snapshot) {
+                return UserAccountsDrawerHeader(
+                  accountName: Text(snapshot.data['user']['name']),
+                  accountEmail: Text(snapshot.data['user']['email']),
+                  currentAccountPicture: CircleAvatar(
+                    child: ClipOval(
+                      child: Image.network(
+                        'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
+                        fit: BoxFit.cover,
+                        width: 90,
+                        height: 90,
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: AssetImage("images/dogb.png"),
+                    ),
+                  ),
+                );
+              }),
           ListTile(
               leading: Icon(Icons.map_outlined),
               title: Text('Favorites'),
