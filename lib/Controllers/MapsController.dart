@@ -70,6 +70,8 @@ class MapsController extends GetxController {
     List<Placemark> placemark =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = placemark[0];
-    address.value = ' 📍${place.locality},${place.country}';
+    address.value = ' 📍${place.street}, ${place.locality}';
+    // ${place.postalCode},
+    // ${place.country}
   }
 }

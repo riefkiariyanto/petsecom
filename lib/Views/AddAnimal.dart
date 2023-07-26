@@ -177,7 +177,7 @@ scroll() {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              controller.address.value,
+                              'controller.address.value',
                               style: TextStyle(
                                 fontSize: 12,
                               ),

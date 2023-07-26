@@ -176,7 +176,7 @@ class _FirtsPageState extends State<FirtsPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  const ItemsWidget(),
+                  ItemsWidget(),
                 ],
               ),
             ],

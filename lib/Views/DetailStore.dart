@@ -156,7 +156,7 @@ scroll() {
                 SizedBox(
                   height: 20,
                 ),
-                const ItemsWidget(),
+                ItemsWidget(),
               ],
             ),
           ),

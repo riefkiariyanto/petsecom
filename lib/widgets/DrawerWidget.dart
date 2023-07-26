@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:petsecom/StatusOrder/StatusOrder.dart';
+import 'package:petsecom/Views/ProfilePage.dart';
+import 'package:petsecom/widgets/Checkout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Views/MapsView.dart';
@@ -49,7 +50,7 @@ class DrawerWidget extends StatelessWidget {
               }),
           ListTile(
               leading: Icon(Icons.map_outlined),
-              title: Text('Favorites'),
+              title: Text('Maps'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => MapsView(),
@@ -57,10 +58,10 @@ class DrawerWidget extends StatelessWidget {
               }),
           ListTile(
               leading: Icon(Icons.person),
-              title: Text('Friends'),
+              title: Text('StatusOrder'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => StatuOrder(),
+                  builder: (context) => CheckOut(),
                 ));
               }),
           ListTile(

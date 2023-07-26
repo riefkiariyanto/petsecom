@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CartItem extends StatefulWidget {
@@ -9,86 +8,153 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
+  int qty = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 100,
-          margin: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+    return Flexible(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Container(
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
             color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 3,
-                offset: Offset(0, 2), // changes position of shadow
-              ),
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 1),
             ],
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(35),
+          child: Container(
+            margin: EdgeInsets.all(10),
             child: Row(
               children: [
-                Expanded(
-                    flex: 4,
-                    child: SizedBox(
-                      height: double.infinity,
-                      child: Image.asset(
-                        "images/listPic.jpeg",
-                      ),
-                    )),
-                Expanded(
-                    flex: 6,
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Center(
                     child: Container(
-                      margin: EdgeInsets.only(left: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        image: DecorationImage(
+                          image: ExactAssetImage("images/dogb.png"),
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
+                          Container(
+                            width: 100,
                             child: Text(
-                              'Categories ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              "Anjing lucu muka jelek",
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
+                          Spacer(),
+                          Container(
                             child: Text(
-                              'Qty : 1',
+                              'Rp 3000',
                               style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              'Price : Rp 1000',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
+                                color: Colors.redAccent,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ))
+                      SizedBox(height: 20),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                qty--;
+                              });
+                            },
+                            child: Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            qty.toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                qty++;
+                              });
+                            },
+                            child: Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.blueAccent,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                            ),
+                          ),
+                          // Spacer(),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       IconButton(
+                          //         onPressed: () {
+                          //           setState(() {});
+                          //         },
+                          //         color: Colors.red,
+                          //         icon: Icon(Icons.delete),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // )
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 }

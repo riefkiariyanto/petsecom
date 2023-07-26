@@ -13,9 +13,9 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: Colors.white,
         bottomOpacity: 0.0,
         elevation: 0.0,
         title: Text(
@@ -33,8 +33,46 @@ class _CartPageState extends State<CartPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CartItem(),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Flexible(
+                  child: CartItem(),
+                ),
+                Container(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 120,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                )
+              ],
+            ),
             SizedBox(
               height: 10,
             ),
