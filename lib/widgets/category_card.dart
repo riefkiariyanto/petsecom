@@ -42,7 +42,8 @@ class CategoryCard extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.face,
+                    Icons.store,
+                    color: Colors.orangeAccent,
                   ),
                   SizedBox(
                     width: 5,
@@ -76,7 +77,7 @@ class CategoryCard extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           width: MediaQuery.of(context).size.width,
-          height: 450,
+          height: 400,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -102,7 +103,6 @@ class CategoryCard extends StatelessWidget {
                 height: 2,
               ),
               Container(
-                height: 130,
                 child: list_toko(),
               ),
             ],

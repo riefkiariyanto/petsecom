@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:petsecom/Views/CartPage.dart';
-import 'package:petsecom/Views/ItemsWidget.dart';
+import 'package:petsecom/widgets/ItemsWidget.dart';
 import 'package:petsecom/widgets/DrawerWidget.dart';
 import '../Controllers/MapsController.dart';
 
@@ -22,15 +22,6 @@ class _FirtsPageState extends State<FirtsPage> {
         child: Scaffold(
           drawer: DrawerWidget(),
           appBar: AppBar(
-            // leading: IconButton(
-            //   onPressed: () => Scaffold.of(context).openDrawer(),
-            //   icon: Builder(builder: (context) {
-            //     return Icon(
-            //       Icons.menu_rounded,
-            //       color: Colors.grey[700],
-            //     );
-            //   }),
-            // ),
             backgroundColor: Colors.transparent,
             bottomOpacity: 0.0,
             elevation: 0.0,
@@ -156,9 +147,6 @@ class _FirtsPageState extends State<FirtsPage> {
                         CategoryCard(
                           categoryName: 'List PetShop',
                         ),
-                        CategoryCard(
-                          categoryName: 'List Item',
-                        ),
                       ],
                     ),
                   ),
@@ -166,7 +154,7 @@ class _FirtsPageState extends State<FirtsPage> {
                     height: 20,
                   ),
                   Text(
-                    'Categories ',
+                    'New Items ',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,

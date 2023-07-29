@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../Controllers/MapsController.dart';
 import 'CartPage.dart';
-import 'ItemsWidget.dart';
+import '../widgets/ItemsWidget.dart';
 
 class DeatailStore extends StatefulWidget {
   const DeatailStore({super.key});
@@ -24,7 +24,7 @@ class _DeatailStoreState extends State<DeatailStore> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         title: Text(
-          "Detail Item",
+          "Store",
           style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,

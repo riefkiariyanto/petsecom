@@ -4,9 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:petsecom/Views/FirstPage.dart';
 import 'package:petsecom/Views/AddAnimal.dart';
-import 'package:petsecom/Views/LoginPage.dart';
 import 'package:petsecom/Views/ProfilePage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

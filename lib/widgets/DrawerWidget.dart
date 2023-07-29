@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:petsecom/Views/ProfilePage.dart';
 import 'package:petsecom/widgets/Checkout.dart';
+import 'package:petsecom/Delete/ProductWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Views/MapsView.dart';
@@ -65,9 +66,13 @@ class DrawerWidget extends StatelessWidget {
                 ));
               }),
           ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Request'),
-          ),
+              leading: Icon(Icons.notifications),
+              title: Text('Request'),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ProductWidget(),
+                ));
+              }),
           Divider(),
           ListTile(
             leading: Icon(Icons.settings),

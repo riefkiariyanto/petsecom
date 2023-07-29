@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petsecom/widgets/CartItem.dart';
+import 'package:petsecom/widgets/StoreCart.dart';
+
+import '../widgets/CartItem.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -31,117 +33,11 @@ class _CartPageState extends State<CartPage> {
           icon: Icon(Icons.arrow_back, color: Colors.grey[700]),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Flexible(
-                  child: CartItem(),
-                ),
-                Container(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: 120,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 2,
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        Icons.delete,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            CheckoutState(),
-            SizedBox(
-              height: 20,
-            ),
-            CheckOutButton()
-          ],
-        ),
-      ),
-    );
-  }
-
-  CheckoutState() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(
-            height: 2,
-            color: Colors.grey[400],
-            thickness: 2,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Row(
-              children: [
-                Text(
-                  'Total ',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  "\$ Price",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          StoreCart(),
         ],
-      ),
-    );
-  }
-
-  CheckOutButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.deepOrange,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Center(
-          child: Text(
-            'CheckOut',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
       ),
     );
   }
