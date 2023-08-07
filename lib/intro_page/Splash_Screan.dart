@@ -27,9 +27,19 @@ class _SplashScreanState extends State<SplashScrean> {
     bool slogin;
     slogin = prefs.getBool('slogin') ?? false;
 
-    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (_) {
-      return slogin ? new HomePage() : new LoginPage();
-    }));
+    bool sregister;
+    sregister = prefs.getBool('sregister') ?? false;
+
+    Navigator.of(context).pushReplacement(
+      new MaterialPageRoute(builder: (_) {
+        return slogin ? new HomePage() : new LoginPage();
+      }),
+    );
+    Navigator.of(context).pushReplacement(
+      new MaterialPageRoute(builder: (_) {
+        return sregister ? new HomePage() : new LoginPage();
+      }),
+    );
   }
 
   @override

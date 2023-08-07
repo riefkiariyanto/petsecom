@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:petsecom/widgets/ProductDetail.dart';
 
 import '../Constants/constants.dart';
 
@@ -28,12 +29,25 @@ class _ItemsWidgetState extends State<ItemsWidget> {
               builder: (context, snapshot) {
                 child:
                 return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => ProductDetail(),
+                      ),
+                    );
+                  },
                   child: Container(
                     padding: EdgeInsets.only(left: 15, right: 15, top: 10),
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 1,
+                            offset: Offset(0.0, 0.75)),
+                      ],
                     ),
                     child: Column(
                       children: [
@@ -43,8 +57,14 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                             Center(
                               child: Container(
                                 height: 110,
-                                width: 130,
+                                width: 120,
                                 decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(0.3),
+                                        blurRadius: 1,
+                                        offset: Offset(0.0, 0.75)),
+                                  ],
                                   color: Colors.blue,
                                   borderRadius: BorderRadius.circular(20),
                                   image: DecorationImage(

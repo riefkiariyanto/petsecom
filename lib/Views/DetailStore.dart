@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../Controllers/MapsController.dart';
-import 'CartPage.dart';
+import '../widgets/Cart/CartPage.dart';
 import '../widgets/ItemsWidget.dart';
 
 class DeatailStore extends StatefulWidget {

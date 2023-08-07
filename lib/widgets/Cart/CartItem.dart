@@ -22,7 +22,7 @@ class _CartItemState extends State<CartItem> {
               return Container(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -116,7 +116,8 @@ class _CartItemState extends State<CartItem> {
                                           child: GestureDetector(
                                             onTap: qty == 1
                                                 ? null
-                                                : () => setState(() => qty = 1),
+                                                : () =>
+                                                    setState(() => qty -= 1),
                                             child: Container(
                                               width: 20,
                                               height: 20,

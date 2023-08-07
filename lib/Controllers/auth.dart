@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:petsecom/Constants/constants.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:petsecom/Views/HomePage.dart';
@@ -11,24 +12,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthController extends GetxController {
   final isLoading = false.obs;
   final token = ''.obs;
-
   final box = GetStorage();
 
   Future register({
     required String name,
     required String username,
+    required String phone,
+    required String address,
     required String email,
     required String password,
+    required String images,
   }) async {
     try {
       isLoading.value = true;
       var data = {
         'name': name,
         'username': username,
+        'phone': phone,
+        'address': address,
         'email': email,
         'password': password,
+        'images': images,
       };
 
+      final prefs = await SharedPreferences.getInstance();
       var response = await http.post(
         Uri.parse('${url}register'),
         headers: {
@@ -40,7 +47,10 @@ class AuthController extends GetxController {
       if (response.statusCode == 201) {
         isLoading.value = false;
         token.value = json.decode(response.body)['token'];
+
         box.write('token', token.value);
+        prefs.setBool('sregister', true);
+        prefs.setString('_data', response.body);
         Get.offAll(() => const HomePage());
       } else {
         isLoading.value = false;

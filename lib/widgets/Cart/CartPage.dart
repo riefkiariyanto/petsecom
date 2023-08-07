@@ -1,24 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProductPage extends StatefulWidget {
-  const ProductPage({super.key});
+import 'CartItem.dart';
+import 'StoreCart.dart';
+
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  State<ProductPage> createState() => _ProductPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.white,
         bottomOpacity: 0.0,
         elevation: 0.0,
         title: Text(
-          "Product",
+          "Cart",
           style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
@@ -29,6 +32,12 @@ class _ProductPageState extends State<ProductPage> {
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back, color: Colors.grey[700]),
         ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          StoreCart(),
+        ],
       ),
     );
   }

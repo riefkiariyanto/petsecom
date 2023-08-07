@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petsecom/widgets/CartItem.dart';
+import 'package:petsecom/widgets/Checkout/checkout.dart';
+
+import 'CartItem.dart';
 
 class StoreCart extends StatefulWidget {
   const StoreCart({super.key});
@@ -16,7 +18,7 @@ class _StoreCartState extends State<StoreCart> {
       child: Expanded(
         child: ListView.builder(
             shrinkWrap: true,
-            itemCount: 4,
+            itemCount: 1,
             itemBuilder: (context, index) {
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -99,7 +101,12 @@ class _StoreCartState extends State<StoreCart> {
                             Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => CheckOut(),
+                                    ));
+                                  },
                                   child: Container(
                                     padding: EdgeInsets.all(10),
                                     margin: EdgeInsets.symmetric(

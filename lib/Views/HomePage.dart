@@ -6,6 +6,8 @@ import 'package:petsecom/Views/FirstPage.dart';
 import 'package:petsecom/Views/AddAnimal.dart';
 import 'package:petsecom/Views/ProfilePage.dart';
 
+import '../widgets/ListOrder/ListOrderPage.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -18,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   List pages = [
     FirtsPage(),
     const AddAnimal(),
+    const ListOrder(),
     const ProfilePage(),
   ];
   void onTap(int index) {
@@ -35,7 +38,7 @@ class _HomePageState extends State<HomePage> {
       //GNav Bar\\
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          color: Colors.white,
         ),
         child: SafeArea(
           child: Padding(
@@ -46,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               activeColor: Colors.deepOrange[400],
               iconSize: 24,
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[300]!,
+              tabBackgroundColor: Colors.grey[100]!,
               color: Colors.grey[700],
               tabs: [
                 GButton(
@@ -56,6 +59,10 @@ class _HomePageState extends State<HomePage> {
                 GButton(
                   icon: CupertinoIcons.add_circled,
                   text: 'Add',
+                ),
+                GButton(
+                  icon: LineIcons.list,
+                  text: 'list',
                 ),
                 GButton(
                   icon: LineIcons.user,

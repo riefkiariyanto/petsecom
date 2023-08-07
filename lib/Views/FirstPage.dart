@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:petsecom/Views/CartPage.dart';
 import 'package:petsecom/widgets/ItemsWidget.dart';
 import 'package:petsecom/widgets/DrawerWidget.dart';
 import '../Controllers/MapsController.dart';
 
+import '../widgets/Cart/CartPage.dart';
 import '../widgets/category_card.dart';
 
 class FirtsPage extends StatefulWidget {
@@ -30,7 +30,7 @@ class _FirtsPageState extends State<FirtsPage> {
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey[700]),
+                  color: Colors.grey[600]),
             ),
             centerTitle: true,
             actions: <Widget>[
@@ -48,7 +48,7 @@ class _FirtsPageState extends State<FirtsPage> {
               ),
             ],
           ),
-          backgroundColor: Colors.grey[100],
+          backgroundColor: Colors.grey[50],
           body: ListView(
             padding: EdgeInsets.all(16),
             children: [

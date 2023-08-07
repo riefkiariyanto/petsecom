@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:petsecom/Constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:petsecom/Views/CartPage.dart';
 import 'package:petsecom/Views/HomePage.dart';
 import 'package:petsecom/Views/LoginPage.dart';
 import 'package:http/http.dart' as http;
+
+import '../widgets/Cart/CartPage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,18 +23,10 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _emailController = TextEditingController();
   final box = GetStorage();
 
-  Future getUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    String _data;
-    _data = prefs.getString('_data') ?? '';
-
-    return json.decode(_data);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
@@ -67,27 +60,106 @@ class _ProfilePageState extends State<ProfilePage> {
           icon: Icon(Icons.arrow_back, color: Colors.grey[700]),
         ),
       ),
-      body: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              profileImage(),
-              SizedBox(
-                height: 10,
-              ),
-              ProfileUser(context),
-              SizedBox(
-                height: 30,
-              ),
-              logoutbtn(context),
-            ],
-          ),
-        ],
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: Stack(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                profileImage(context),
+                SizedBox(
+                  height: 10,
+                ),
+                ProfileBio(context),
+                SizedBox(
+                  height: 30,
+                ),
+                logoutbtn(context),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+ProfileBio(BuildContext context) {
+  Future getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    String _data;
+    _data = prefs.getString('_data') ?? '';
+
+    return json.decode(_data);
+  }
+
+  return FutureBuilder(
+      future: getUser(),
+      builder: (context, snapshot) {
+        return Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Text(
+                snapshot.data['user']['name'],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ListTile(
+                      visualDensity: VisualDensity(vertical: -3), // to compact
+                      leading: Icon(Icons.email),
+                      title: Text(
+                        snapshot.data['user']['email'],
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      visualDensity: VisualDensity(vertical: -4), // to compact
+                      leading: Icon(Icons.phone_iphone),
+                      title: Text(
+                        snapshot.data['user']['phone'],
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      visualDensity: VisualDensity(vertical: -3), // to compact
+                      leading: Icon(Icons.location_on),
+                      title: Text(snapshot.data['user']['address'],
+                          style: TextStyle(
+                            fontSize: 14,
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      });
 }
 
 logoutbtn(BuildContext context) {
@@ -100,6 +172,7 @@ logoutbtn(BuildContext context) {
         final SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         sharedPreferences.remove('slogin');
+        sharedPreferences.remove('sregister');
         Get.to(LoginPage());
       },
       child: Container(
@@ -124,26 +197,11 @@ logoutbtn(BuildContext context) {
   );
 }
 
-profileImage() {
-  return CircleAvatar(
-    radius: 60,
-    child: ClipOval(
-      child: Image.network(
-        'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
-        fit: BoxFit.cover,
-        width: 120,
-        height: 120,
-      ),
-    ),
-  );
-}
-
-ProfileUser(BuildContext context) {
+profileImage(BuildContext context) {
   Future getUser() async {
     final prefs = await SharedPreferences.getInstance();
     String _data;
     _data = prefs.getString('_data') ?? '';
-
     return json.decode(_data);
   }
 
@@ -152,16 +210,16 @@ ProfileUser(BuildContext context) {
       builder: (context, snapshot) {
         return Column(
           children: [
-            Text(
-              snapshot.data['user']['name'],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
+            CircleAvatar(
+              radius: 60,
+              child: ClipOval(
+                child: Image.network(
+                  'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg',
+                  fit: BoxFit.cover,
+                  width: 120,
+                  height: 120,
+                ),
               ),
-            ),
-            Text(
-              snapshot.data['user']['email'],
-              style: TextStyle(color: Colors.grey),
             )
           ],
         );

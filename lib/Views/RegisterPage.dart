@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petsecom/Controllers/auth.dart';
-import '../input_widgets.dart';
+import '../Controllers/input_widgets.dart';
 import 'LoginPage.dart';
 
 class RegistePage extends StatefulWidget {
@@ -15,6 +15,11 @@ class RegistePage extends StatefulWidget {
 class _RegistePageState extends State<RegistePage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _imagesController = TextEditingController();
+
+  // final TextEditingController _ImagesController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AuthController _authController = Get.put(AuthController());
@@ -23,6 +28,7 @@ class _RegistePageState extends State<RegistePage> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.only(left: 40, right: 40),
@@ -56,6 +62,16 @@ class _RegistePageState extends State<RegistePage> {
                 labelText: 'username',
                 isObscureText: false,
                 controller: _usernameController,
+              ),
+              inputNumber(
+                labelText: 'phone',
+                isObscureText: false,
+                controller: _phoneController,
+              ),
+              InputWidget(
+                labelText: 'address',
+                isObscureText: false,
+                controller: _addressController,
               ),
               SizedBox(height: height * 0.01),
               InputWidget(
@@ -106,9 +122,12 @@ class _RegistePageState extends State<RegistePage> {
                                         name: _nameController.text.trim(),
                                         username:
                                             _usernameController.text.trim(),
+                                        phone: _phoneController.text.trim(),
+                                        address: _addressController.text.trim(),
                                         email: _emailController.text.trim(),
                                         password:
                                             _passwordController.text.trim(),
+                                        images: _imagesController.text.trim(),
                                       );
                                     },
                                   ),

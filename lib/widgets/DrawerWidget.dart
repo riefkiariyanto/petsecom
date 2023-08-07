@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:petsecom/Views/ProfilePage.dart';
-import 'package:petsecom/widgets/Checkout.dart';
-import 'package:petsecom/Delete/ProductWidget.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:petsecom/widgets/StatusOrder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Views/MapsView.dart';
+import '../Views/LoginPage.dart';
+import 'Checkout/checkout.dart';
+import 'Gmaps/MapsView.dart';
 
 class DrawerWidget extends StatelessWidget {
   Future getUser() async {
@@ -66,23 +68,33 @@ class DrawerWidget extends StatelessWidget {
                 ));
               }),
           ListTile(
-              leading: Icon(Icons.notifications),
-              title: Text('Request'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ProductWidget(),
-                ));
-              }),
+            leading: Icon(Icons.notifications),
+            title: Text('Request'),
+            // onTap: () {
+            //   Navigator.of(context).push(MaterialPageRoute(
+            //     builder: (context) => ProductWidget(),
+            //   ));
+            // }
+          ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () => null,
-          ),
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => StatusOrder(),
+                ));
+              }),
           ListTile(
             leading: Icon(Icons.description),
             title: Text('Policies'),
-            onTap: () => null,
+            onTap: () async {
+              final SharedPreferences sharedPreferences =
+                  await SharedPreferences.getInstance();
+              sharedPreferences.remove('slogin');
+              sharedPreferences.remove('sregister');
+              Get.to(LoginPage());
+            },
           ),
           Divider(),
           ListTile(
