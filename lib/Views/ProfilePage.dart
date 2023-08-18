@@ -98,6 +98,11 @@ ProfileBio(BuildContext context) {
   return FutureBuilder(
       future: getUser(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+              child: CircularProgressIndicator() // Show a loading indicator
+              );
+        }
         return Column(
           children: [
             Container(

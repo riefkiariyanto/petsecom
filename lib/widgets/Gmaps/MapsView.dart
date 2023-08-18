@@ -22,7 +22,7 @@ class _MapsViewState extends State<MapsView> {
 
   CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(-7.928334, 112.607303),
-    zoom: 15.0,
+    zoom: 14.0,
   );
 
   @override

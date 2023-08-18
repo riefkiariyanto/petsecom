@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:petsecom/Constants/constants.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:petsecom/Views/HomePage.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
@@ -111,6 +111,23 @@ class AuthController extends GetxController {
       isLoading.value = false;
 
       print(e.toString());
+    }
+  }
+
+  Future getUserID() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userData = prefs.getString('_data');
+      if (userData != null) {
+        final data = json.decode(userData);
+        final userID = data['user']
+            ['id']; // Ubah sesuai dengan nama field yang menyimpan ID pengguna
+        return userID;
+      }
+      return null; // Jika data user tidak ditemukan
+    } catch (e) {
+      print('Error getting user ID: $e');
+      return null;
     }
   }
 }
