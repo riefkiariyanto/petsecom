@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:petsecom/widgets/StatusOrder.dart';
+import 'package:petsecom/widgets/product/ProductDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Views/LoginPage.dart';
@@ -60,13 +61,9 @@ class DrawerWidget extends StatelessWidget {
                 ));
               }),
           ListTile(
-              leading: Icon(Icons.person),
-              title: Text('StatusOrder'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => CheckOut(),
-                ));
-              }),
+            leading: Icon(Icons.person),
+            title: Text('StatusOrder'),
+          ),
           ListTile(
             leading: Icon(Icons.notifications),
             title: Text('Request'),

@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../Controllers/MapsController.dart';
 import '../widgets/Cart/CartPage.dart';
-import '../widgets/ItemsWidget.dart';
+import '../widgets/product/ItemsWidget.dart';
 
 class DeatailStore extends StatefulWidget {
   const DeatailStore({super.key});

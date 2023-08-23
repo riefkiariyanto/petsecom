@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:petsecom/widgets/ItemsWidget.dart';
+import 'package:petsecom/widgets/product/ItemsWidget.dart';
 import 'package:petsecom/widgets/DrawerWidget.dart';
 import '../Controllers/MapsController.dart';
 

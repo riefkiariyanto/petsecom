@@ -1,13 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:petsecom/widgets/ProductDetail.dart';
+import 'package:petsecom/widgets/product/ProductDetail.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Constants/constants.dart';
+import '../../Constants/constants.dart';
 
 class ItemsWidget extends StatefulWidget {
   const ItemsWidget({super.key});
@@ -18,7 +17,7 @@ class ItemsWidget extends StatefulWidget {
 
 class _ItemsWidgetState extends State<ItemsWidget> {
   Future getProduct() async {
-    final UrlData = '${url}list-product';
+    final UrlData = '${url}list-product/';
 
     try {
       http.Response response = await http.get(Uri.parse(UrlData));
@@ -74,24 +73,40 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Center(
-                                    child: Container(
-                                      height: 110,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color:
-                                                  Colors.black.withOpacity(0.1),
-                                              blurRadius: 1,
-                                              offset: Offset(0.0, 0.75)),
-                                        ],
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.network(
-                                          "${urlImage}storage/${snapshot.data['data'][i]['image']}",
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        // Navigate to the product detail page with the product's ID
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                ProductDetail(
+                                                    productId: snapshot
+                                                        .data['data'][i]['id']),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 110,
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(0.1),
+                                                blurRadius: 1,
+                                                offset: Offset(0.0, 0.75)),
+                                          ],
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.network(
+                                            "${urlImage}storage/${snapshot.data['data'][i]['image']}",
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -129,7 +144,7 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      snapshot.data['data'][i]['price'],
+                                      'Rp${snapshot.data['data'][i]['price']}',
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
