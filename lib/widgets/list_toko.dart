@@ -56,8 +56,18 @@ class _list_tokoState extends State<list_toko> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (BuildContext context) => DeatailStore()));
+                        int idClient =
+                            snapshot.data['data'][index]['id_clients'];
+                        print('id_clients: $idClient');
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => DetailStore(
+                                idClient: snapshot.data['data'][index]
+                                    ['id_clients']),
+                          ),
+                        );
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 7),
@@ -96,7 +106,7 @@ class _list_tokoState extends State<list_toko> {
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           child: Image.network(
-                                            "${urlImage}storage/${snapshot.data['data'][0]['logo']}",
+                                            "${urlImage}storage/${snapshot.data['data'][index]['logo']}",
                                           ),
                                         ),
                                       ),

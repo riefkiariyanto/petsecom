@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   List pages = [
     FirtsPage(),
-    const AddAnimal(),
     const ListOrder(),
     const ProfilePage(),
   ];
@@ -55,10 +54,6 @@ class _HomePageState extends State<HomePage> {
                 GButton(
                   icon: LineIcons.home,
                   text: 'Home',
-                ),
-                GButton(
-                  icon: CupertinoIcons.add_circled,
-                  text: 'Add',
                 ),
                 GButton(
                   icon: LineIcons.list,

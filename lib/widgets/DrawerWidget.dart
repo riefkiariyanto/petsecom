@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:petsecom/widgets/Gmaps/MapsFix.dart';
 import 'package:petsecom/widgets/StatusOrder.dart';
 import 'package:petsecom/widgets/product/ProductDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,9 +62,13 @@ class DrawerWidget extends StatelessWidget {
                 ));
               }),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('StatusOrder'),
-          ),
+              leading: Icon(Icons.map_outlined),
+              title: Text('Maps'),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MapsFix(),
+                ));
+              }),
           ListTile(
             leading: Icon(Icons.notifications),
             title: Text('Request'),

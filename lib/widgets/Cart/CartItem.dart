@@ -19,9 +19,31 @@ class _CartItemState extends State<CartItem> {
   double totalCartPrice = 0; // Deklarasikan secara global
   Map<int, int> productQuantities = {}; // Map to store product quantities
 
-  Future<List<dynamic>> fetchCartItems() async {
-    List<dynamic> cartItems = await CartApiHelper.getItemCart();
-    return cartItems;
+  static Future<List<dynamic>> getItemCart() async {
+    final urlCart = '${url}list-cart';
+    final authController = Get.find<AuthController>();
+    final userID = await authController.getUserID();
+
+    try {
+      http.Response response = await http.get(Uri.parse(urlCart));
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body);
+        List<dynamic> data = jsonData['data'];
+
+        // Filter data based on user_id
+        List filteredData =
+            data.where((item) => item['id_user'] == userID).toList();
+
+        return filteredData;
+      } else {
+        print("Error - Status Code: ${response.statusCode}");
+        print("Error - Message: ${response.body}");
+        return [];
+      }
+    } catch (e) {
+      print('Error: $e');
+      return [];
+    }
   }
 
   @override
@@ -29,7 +51,7 @@ class _CartItemState extends State<CartItem> {
     return Container(
       child: Expanded(
         child: FutureBuilder(
-            future: fetchCartItems(),
+            future: getItemCart(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -51,8 +73,9 @@ class _CartItemState extends State<CartItem> {
                     itemCount: filteredData?.length,
                     itemBuilder: (context, index) {
                       final cartItem = filteredData?[index];
-                      final product = cartItem['product'];
-                      final productId = product['id']; // Get the product ID
+                      final product = cartItem['products'];
+                      final productId =
+                          product['id_product']; // Get the product ID
                       if (!productQuantities.containsKey(productId)) {
                         productQuantities[productId] = 1;
                       }
@@ -143,7 +166,7 @@ class _CartItemState extends State<CartItem> {
                                                         });
                                                       } else {
                                                         List updatedData =
-                                                            await fetchCartItems();
+                                                            await getItemCart();
                                                         setState(() {
                                                           filteredData =
                                                               updatedData;

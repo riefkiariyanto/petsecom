@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:petsecom/Views/HomePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants/constants.dart';
 import '../../Controllers/MapsController.dart';
 import '../../Views/DetailStore.dart';
 import '../Cart/CartPage.dart';
 
 class ProductDetail extends StatefulWidget {
-  final int productId; // Add this parameter
+  final int productId; // Add this parameterr
   const ProductDetail({required this.productId, Key? key}) : super(key: key);
 
   @override
@@ -20,11 +21,12 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetail> {
   Future getProduct() async {
-    final UrlData = '${url}list-product';
+    final UrlData = '${url}list-product/shop';
 
     try {
       http.Response response = await http.get(Uri.parse(UrlData));
       if (response.statusCode == 200) {
+        print(json.decode(response.body)['data'][0]['name']);
         return jsonDecode(response.body);
       } else {
         print("Error - Status Code: ${response.statusCode}");
@@ -101,7 +103,8 @@ class _ProductDetailState extends State<ProductDetail> {
                             "${urlImage}storage/${productData['image']}";
 
                         return Container(
-                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -250,9 +253,11 @@ class _ProductDetailState extends State<ProductDetail> {
                           children: [
                             CircleAvatar(
                               radius: 25,
-                              backgroundImage: AssetImage(
-                                "images/cdogb.png",
-                              ),
+                              backgroundColor: Colors
+                                  .white, // Mengatur warna latar belakang menjadi putih
+
+                              backgroundImage: NetworkImage(
+                                  "${urlImage}storage/${shopData['logo']}"),
                             ),
                             SizedBox(
                               width: 5,
@@ -263,14 +268,19 @@ class _ProductDetailState extends State<ProductDetail> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        DeatailStore()));
+                                        int idClient = shopData['id_clients'];
+                                        print('id_clients: $idClient');
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                DetailStore(idClient: idClient),
+                                          ),
+                                        );
                                       },
                                       child: Text(
-                                        'Store',
+                                        shopData['store_name'],
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
@@ -282,10 +292,13 @@ class _ProductDetailState extends State<ProductDetail> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'controller.address.value',
-                                      style: TextStyle(
-                                        fontSize: 12,
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        shopData['address'],
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -345,19 +358,49 @@ class _ProductDetailState extends State<ProductDetail> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                height: 50,
-                                width: 320,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue[600],
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: const [BoxShadow()],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Add To Cart',
-                                    style: TextStyle(
-                                      color: Colors.white,
+                              GestureDetector(
+                                onTap: () async {
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+                                  String _data;
+                                  _data = prefs.getString('_data') ?? '';
+                                  Map<String, dynamic> decodedData =
+                                      json.decode(_data); // Decode the data
+
+                                  var response = await http
+                                      .post(Uri.parse("${url}add-cart"), body: {
+                                    "id_products": productData['id'].toString(),
+                                    "id_user": decodedData['user']['id']
+                                        .toString(), // Use the decoded user ID
+
+                                    "qty": productData['qty'].toString(),
+                                    "date": DateTime.now().toString(),
+                                    "status": "pending"
+                                  });
+                                  if (response.statusCode == 200) {
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Item added to cart successfully')),
+                                    );
+                                  }
+                                  print(response.body);
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: 320,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue[600],
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: const [BoxShadow()],
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Add To Cart',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
