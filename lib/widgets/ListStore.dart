@@ -6,14 +6,14 @@ import 'package:http/http.dart' as http;
 import '../Constants/constants.dart';
 import '../Views/DetailStore.dart';
 
-class list_toko extends StatefulWidget {
-  const list_toko({super.key});
+class ListStore extends StatefulWidget {
+  const ListStore({super.key});
 
   @override
-  State<list_toko> createState() => _list_tokoState();
+  State<ListStore> createState() => _ListStoreState();
 }
 
-class _list_tokoState extends State<list_toko> {
+class _ListStoreState extends State<ListStore> {
   Future getStore() async {
     final UrlStore = '${url}get-biodata-client';
 
@@ -121,7 +121,7 @@ class _list_tokoState extends State<list_toko> {
                                         Column(
                                           children: [
                                             Container(
-                                              width: 120,
+                                              width: 140,
                                               child: Text(
                                                 snapshot.data['data'][index]
                                                     ['store_name'],
@@ -135,14 +135,15 @@ class _list_tokoState extends State<list_toko> {
                                               height: 3,
                                             ),
                                             Container(
-                                              width: 120,
+                                              width: 140,
                                               child: Text(
                                                 snapshot.data['data'][index]
                                                     ['address'],
                                                 style: TextStyle(
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.grey[400]),
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: Colors.grey[600]),
                                               ),
                                             ),
                                           ],

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:petsecom/Views/FirstPage.dart';
-import 'package:petsecom/Views/AddAnimal.dart';
 import 'package:petsecom/Views/ProfilePage.dart';
 
 import '../widgets/ListOrder/ListOrderPage.dart';

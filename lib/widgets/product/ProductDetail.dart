@@ -65,12 +65,7 @@ class _ProductDetailState extends State<ProductDetail> {
           ),
         ],
         leading: IconButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (BuildContext context) {
-              return const HomePage();
-            }));
-          },
+          onPressed: () => Navigator.of(context).pop(),
           icon: Icon(Icons.arrow_back, color: Colors.grey[700]),
         ),
       ),

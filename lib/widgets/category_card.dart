@@ -1,6 +1,6 @@
 // import 'package:adoptme/animal_list.dart';
 import 'package:flutter/material.dart';
-import 'package:petsecom/widgets/list_toko.dart';
+import 'package:petsecom/widgets/ListStore.dart';
 // import 'List_Controller.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -103,7 +103,7 @@ class CategoryCard extends StatelessWidget {
                 height: 2,
               ),
               Container(
-                child: list_toko(),
+                child: ListStore(),
               ),
             ],
           ),

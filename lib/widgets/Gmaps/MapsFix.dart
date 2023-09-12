@@ -87,7 +87,7 @@ class _MapsFixState extends State<MapsFix> {
           : Column(
               children: [
                 Container(
-                  height: 500,
+                  height: 450,
                   child: Stack(
                     children: [
                       GoogleMap(
@@ -115,29 +115,34 @@ class _MapsFixState extends State<MapsFix> {
                     ],
                   ),
                 ),
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  child: storeData == null
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          width: double.infinity,
-                          height: 200,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: storeData!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: _buildStoreBox(storeData![index]),
-                              );
-                            },
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    child: storeData == null
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Container(
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            width: double.infinity,
+                            height: 250,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: storeData!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    child: _buildStoreBox(storeData![index]),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
+                  ),
                 )
               ],
             ),
@@ -146,54 +151,92 @@ class _MapsFixState extends State<MapsFix> {
 
   Widget _buildStoreBox(dynamic store) {
     return Container(
-      width: 160, // Adjust the width as needed
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade200,
-            offset: const Offset(3, 4),
-            blurRadius: 4,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 120,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                "${urlImage}storage/${store['logo']}",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Text(
-            store['store_name'],
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Row(
-            children: [
-              Icon(Icons.location_on),
-              Text(
-                store['address'],
-                style: TextStyle(),
+      padding: EdgeInsets.symmetric(vertical: 7),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 1,
               ),
             ],
           ),
-        ],
+          child: Container(
+            margin: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          "${urlImage}storage/${store['logo']}",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            width: 120,
+                            child: Text(
+                              store['store_name'],
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Container(
+                            width: 120,
+                            child: Text(
+                              store['address'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                    child: Container(
+                  alignment: Alignment.topRight,
+                  child: Text('data'),
+                ))
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

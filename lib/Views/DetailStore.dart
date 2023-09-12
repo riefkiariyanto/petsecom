@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Constants/constants.dart';
 import '../Controllers/MapsController.dart';
 import '../widgets/Cart/CartPage.dart';
 import '../widgets/product/ItemsWidget.dart';
+import '../widgets/product/ProductDetail.dart';
 
 class DetailStore extends StatefulWidget {
   final int idClient;
@@ -44,7 +47,7 @@ class _DetailStoreState extends State<DetailStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         bottomOpacity: 0.0,
@@ -79,7 +82,7 @@ class _DetailStoreState extends State<DetailStore> {
               future: getStoreProduct(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError || snapshot.data == null) {
                   return Text('Error: Data not found');
                 } else {
@@ -144,15 +147,158 @@ class _DetailStoreState extends State<DetailStore> {
                             ],
                           ),
                           const Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
                             child: Divider(
                               height: 4,
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          // ItemsWidget(),
+                          FutureBuilder(
+                            future: getStoreProduct(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: Text('No data available.'),
+                                );
+                              }
+                              List<dynamic> products =
+                                  snapshot.data['products'];
+                              return StaggeredGrid.count(
+                                crossAxisCount: 2,
+                                children: [
+                                  for (int i = 0; i < products.length; i++)
+                                    Container(
+                                      padding: EdgeInsets.all(10),
+                                      margin: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                            blurRadius: 1,
+                                            offset: Offset(0.0, 0.75),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          ProductDetail(
+                                                    productId: products[i][
+                                                        'id'], // Pass the product's ID
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              height: 110,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.1),
+                                                    blurRadius: 1,
+                                                    offset: Offset(0.0, 0.75),
+                                                  ),
+                                                ],
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                child: Image.network(
+                                                  "${urlImage}storage/${products[i]['image']}",
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Text(
+                                            products[i]['name'],
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            'Rp${products[i]['price']}',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () async {},
+                                                  child: Container(
+                                                    height: 30,
+                                                    width: 135,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                        color:
+                                                            Colors.deepOrange,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      boxShadow: const [
+                                                        BoxShadow()
+                                                      ],
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        '+   Cart',
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color:
+                                                              Colors.deepOrange,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              );
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -163,4 +309,6 @@ class _DetailStoreState extends State<DetailStore> {
       ),
     );
   }
+
+  itemProductList(BuildContext context) {}
 }
