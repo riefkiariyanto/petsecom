@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 import 'package:petsecom/widgets/product/ProductDetail.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,49 +70,39 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                           ),
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Center(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        // Navigate to the product detail page with the product's ID
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                ProductDetail(
-                                                    productId: snapshot
-                                                        .data['data'][i]['id']),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        height: 110,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.1),
-                                                blurRadius: 1,
-                                                offset: Offset(0.0, 0.75)),
-                                          ],
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          child: Image.network(
-                                            "${urlImage}storage/${snapshot.data['data'][i]['image']}",
-                                          ),
-                                        ),
-                                      ),
+                              GestureDetector(
+                                onTap: () {
+                                  // Navigate to the product detail page with the product's ID
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          ProductDetail(
+                                              productId: snapshot.data['data']
+                                                  [i]['id']),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 110,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          blurRadius: 1,
+                                          offset: Offset(0.0, 0.75)),
+                                    ],
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      "${urlImage}storage/${snapshot.data['data'][i]['image']}",
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
                               SizedBox(
                                 height: 5,
@@ -123,7 +114,6 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                   snapshot.data['data'][i]['name'],
                                   style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -133,7 +123,6 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                   snapshot.data['data'][i]['description'],
                                   style: TextStyle(
                                     fontSize: 10,
-                                    color: Colors.black,
                                   ),
                                 ),
                               ),
@@ -160,28 +149,32 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                             .decode(_data); // Decode the data
 
                                         var response = await http.post(
-                                            Uri.parse("${url}add-cart"),
-                                            body: {
-                                              "id_products": snapshot
-                                                  .data['data'][i]['id']
-                                                  .toString(),
-                                              "id_user": decodedData['user']
-                                                      ['id']
-                                                  .toString(), // Use the decoded user ID
+                                          Uri.parse("${url}add-cart-id"),
+                                          body: {
+                                            "id_products": snapshot.data['data']
+                                                    [i]['id']
+                                                .toString(),
+                                            "id_user": decodedData['user']['id']
+                                                .toString(),
+                                            "qty": 1.toString(),
+                                            "date": DateTime.now().toString(),
+                                            "status": "pending"
+                                          },
+                                        );
 
-                                              "qty": snapshot.data['data'][i]
-                                                      ['qty']
-                                                  .toString(),
-                                              "date": DateTime.now().toString(),
-                                              "status": "pending"
-                                            });
                                         if (response.statusCode == 200) {
+                                          Get.snackbar(
+                                            'success',
+                                            'in Cart',
+                                            backgroundColor: Colors.green,
+                                            colorText: Colors.white,
+                                          );
                                         } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                                content: Text(
-                                                    'Item added to cart successfully')),
+                                          Get.snackbar(
+                                            'Error',
+                                            'Already in Cart',
+                                            backgroundColor: Colors.red,
+                                            colorText: Colors.white,
                                           );
                                         }
                                         print(response.body);

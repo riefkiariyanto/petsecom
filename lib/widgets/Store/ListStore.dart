@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../Constants/constants.dart';
-import '../Views/DetailStore.dart';
+import '../../Constants/constants.dart';
+import 'DetailStore.dart';
 
 class ListStore extends StatefulWidget {
   const ListStore({super.key});

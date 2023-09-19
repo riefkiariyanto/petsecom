@@ -8,7 +8,7 @@ import 'package:petsecom/Views/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants/constants.dart';
 import '../../Controllers/MapsController.dart';
-import '../../Views/DetailStore.dart';
+import '../Store/DetailStore.dart';
 import '../Cart/CartPage.dart';
 
 class ProductDetail extends StatefulWidget {

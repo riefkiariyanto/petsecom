@@ -22,24 +22,20 @@ class _SplashScreanState extends State<SplashScrean> {
     });
   }
 
-  startLaunching() async {
+  void startLaunching() async {
     final prefs = await SharedPreferences.getInstance();
-    bool slogin;
-    slogin = prefs.getBool('slogin') ?? false;
+    bool slogin = prefs.getBool('slogin') ?? false;
+    bool sregister = prefs.getBool('sregister') ?? false;
 
-    bool sregister;
-    sregister = prefs.getBool('sregister') ?? false;
-
-    Navigator.of(context).pushReplacement(
-      new MaterialPageRoute(builder: (_) {
-        return slogin ? new HomePage() : new LoginPage();
-      }),
-    );
-    Navigator.of(context).pushReplacement(
-      new MaterialPageRoute(builder: (_) {
-        return sregister ? new HomePage() : new LoginPage();
-      }),
-    );
+    if (slogin || sregister) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => HomePage()),
+      );
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => LoginPage()),
+      );
+    }
   }
 
   @override

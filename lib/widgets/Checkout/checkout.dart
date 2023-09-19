@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Cart/CartItem.dart';
 
 class CheckOut extends StatefulWidget {
   const CheckOut({super.key});
@@ -207,8 +206,8 @@ class _CheckOutState extends State<CheckOut> {
                                         height: 5,
                                       ),
                                       Row(
-                                        children: [CartItem()],
-                                      )
+                                          // children: [CartItem()],
+                                          )
                                     ],
                                   ),
                                 ),

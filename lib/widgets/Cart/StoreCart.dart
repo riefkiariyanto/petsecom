@@ -1,16 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petsecom/widgets/Cart/CartProduct.dart';
 import 'package:petsecom/widgets/Checkout/checkout.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:http/http.dart' as http;
 import '../../Constants/constants.dart';
 import 'package:petsecom/Controllers/auth.dart';
-import 'CartItem.dart';
 
 class StoreCart extends StatefulWidget {
   const StoreCart({super.key});
@@ -20,22 +16,6 @@ class StoreCart extends StatefulWidget {
 }
 
 class _StoreCartState extends State<StoreCart> {
-  Future getProduct() async {
-    final UrlData = '${url}list-product/shop';
-
-    try {
-      http.Response response = await http.get(Uri.parse(UrlData));
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else {
-        print("Error - Status Code: ${response.statusCode}");
-        print("Error - Message: ${response.body}");
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-
   Future<List<dynamic>> fetchCartData() async {
     final urlCart = '${url}list-cart';
     final authController = Get.find<AuthController>();
@@ -237,24 +217,37 @@ class _StoreCartState extends State<StoreCart> {
                                                                       return GestureDetector(
                                                                         onTap:
                                                                             () async {
-                                                                          var response =
-                                                                              await http.delete(
-                                                                            Uri.parse("${url}delete-cart/${product?[index]['products'][pIndex]['id_product']}"), // Menggunakan id_product yang sesuai
-                                                                          );
-                                                                          if (response.statusCode ==
-                                                                              200) {
-                                                                            setState(() {
-                                                                              product?[index]['products'].removeAt(pIndex); //
-                                                                            });
-                                                                            Get.snackbar(
-                                                                              'Success',
-                                                                              'Item deleted successfully',
-                                                                              backgroundColor: Colors.green,
+                                                                          var productIdToDelete =
+                                                                              product['id_cart'];
+
+                                                                          try {
+                                                                            var response =
+                                                                                await http.delete(
+                                                                              Uri.parse("$url/delete-cart/$productIdToDelete"),
                                                                             );
-                                                                          } else {
+
+                                                                            if (response.statusCode ==
+                                                                                200) {
+                                                                              setState(() {
+                                                                                product['products'].removeAt(pIndex);
+                                                                              });
+                                                                              Get.snackbar(
+                                                                                'Success',
+                                                                                'Item deleted successfully',
+                                                                                backgroundColor: Colors.green,
+                                                                              );
+                                                                            } else {
+                                                                              Get.snackbar(
+                                                                                'Error',
+                                                                                'Failed to delete item',
+                                                                                backgroundColor: Colors.red,
+                                                                              );
+                                                                            }
+                                                                          } catch (e) {
+                                                                            print("Error: $e");
                                                                             Get.snackbar(
                                                                               'Error',
-                                                                              'Failed to delete item',
+                                                                              'An error occurred',
                                                                               backgroundColor: Colors.red,
                                                                             );
                                                                           }
@@ -408,7 +401,7 @@ class _StoreCartState extends State<StoreCart> {
                                           Container(
                                             padding: EdgeInsets.only(left: 10),
                                             child: Text(
-                                              "Rp ${calculateStoreTotal(products)}",
+                                              "Rp ${calculateStoreTotal(products).toStringAsFixed(0)}",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 16,

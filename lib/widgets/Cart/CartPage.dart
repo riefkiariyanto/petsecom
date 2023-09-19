@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'CartItem.dart';
 import 'StoreCart.dart';
 
 class CartPage extends StatefulWidget {

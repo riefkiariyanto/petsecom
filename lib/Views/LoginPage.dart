@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petsecom/Controllers/auth.dart';
 import 'package:petsecom/Views/RegisterPage.dart';
-import 'package:petsecom/genTextFormField.dart';
+import 'package:petsecom/Controllers/genTextFormField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {

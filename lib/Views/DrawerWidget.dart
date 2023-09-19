@@ -5,13 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:petsecom/widgets/Gmaps/MapsFix.dart';
-import 'package:petsecom/widgets/StatusOrder.dart';
-import 'package:petsecom/widgets/product/ProductDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Views/LoginPage.dart';
-import 'Checkout/checkout.dart';
-import 'Gmaps/MapsView.dart';
+import 'LoginPage.dart';
+import '../widgets/product/SearchList.dart';
 
 class DrawerWidget extends StatelessWidget {
   Future getUser() async {
@@ -58,7 +55,9 @@ class DrawerWidget extends StatelessWidget {
               title: Text('Maps'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MapsView(),
+                  builder: (context) => SearchList(
+                    searchQuery: '',
+                  ),
                 ));
               }),
           ListTile(
@@ -70,23 +69,14 @@ class DrawerWidget extends StatelessWidget {
                 ));
               }),
           ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Request'),
-            // onTap: () {
-            //   Navigator.of(context).push(MaterialPageRoute(
-            //     builder: (context) => ProductWidget(),
-            //   ));
-            // }
-          ),
+              leading: Icon(Icons.notifications),
+              title: Text('Request'),
+              onTap: () {}),
           Divider(),
           ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => StatusOrder(),
-                ));
-              }),
+              onTap: () {}),
           ListTile(
             leading: Icon(Icons.description),
             title: Text('Policies'),
