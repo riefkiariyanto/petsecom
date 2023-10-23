@@ -156,7 +156,7 @@ class _SearchListState extends State<SearchList> {
                 title: Row(children: [
                   Container(
                     height: 50,
-                    width: 50,
+                    width: 40,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white),

@@ -65,6 +65,7 @@ class _MapsFixState extends State<MapsFix> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        toolbarHeight: 50,
         bottomOpacity: 2.0,
         elevation: 1.0,
         title: Text(
@@ -87,7 +88,7 @@ class _MapsFixState extends State<MapsFix> {
           : Column(
               children: [
                 Container(
-                  height: 450,
+                  height: 500,
                   child: Stack(
                     children: [
                       GoogleMap(
@@ -124,11 +125,10 @@ class _MapsFixState extends State<MapsFix> {
                           )
                         : Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
-                            width: double.infinity,
-                            height: 250,
+                            height: 120,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
+                              scrollDirection: Axis.horizontal,
                               itemCount: storeData!.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return GestureDetector(
@@ -152,89 +152,43 @@ class _MapsFixState extends State<MapsFix> {
   Widget _buildStoreBox(dynamic store) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 7),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 1,
+            ),
+          ],
+        ),
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 1,
-              ),
-            ],
-          ),
-          child: Container(
-            margin: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          "${urlImage}storage/${store['logo']}",
-                        ),
+          margin: EdgeInsets.all(10),
+          child: Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        "${urlImage}storage/${store['logo']}",
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            width: 120,
-                            child: Text(
-                              store['store_name'],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 3,
-                          ),
-                          Container(
-                            width: 120,
-                            child: Text(
-                              store['address'],
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[400],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                    child: Container(
-                  alignment: Alignment.topRight,
-                  child: Text('data'),
-                ))
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

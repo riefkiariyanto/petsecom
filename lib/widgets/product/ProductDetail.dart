@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:petsecom/Views/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants/constants.dart';
 import '../../Controllers/MapsController.dart';
@@ -72,6 +71,7 @@ class _ProductDetailState extends State<ProductDetail> {
       body: Stack(
         children: [
           Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
             child: Column(
               children: [
                 FutureBuilder(
@@ -92,14 +92,11 @@ class _ProductDetailState extends State<ProductDetail> {
                         if (productData == null) {
                           return Center(child: Text("Product not found"));
                         }
-
                         var shopData = productData['shop'];
                         String imageUrl =
                             "${urlImage}storage/${productData['image']}";
 
                         return Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -116,7 +113,6 @@ class _ProductDetailState extends State<ProductDetail> {
                               children: [
                                 Center(
                                   child: Container(
-                                    padding: EdgeInsets.all(5),
                                     height: 250,
                                     width: 240,
                                     child: ClipRRect(
@@ -146,9 +142,9 @@ class _ProductDetailState extends State<ProductDetail> {
 
   scroll() {
     return DraggableScrollableSheet(
-        initialChildSize: 0.6,
+        initialChildSize: 0.53,
         maxChildSize: 1.0,
-        minChildSize: 0.6,
+        minChildSize: 0.53,
         builder: (context, scrollController) {
           var controller = Get.put(MapsController());
           return FutureBuilder(
@@ -368,33 +364,42 @@ class _ProductDetailState extends State<ProductDetail> {
                                     "id_user": decodedData['user']['id']
                                         .toString(), // Use the decoded user ID
 
-                                    "qty": productData['qty'].toString(),
+                                    "qty": 1.toString(),
                                     "date": DateTime.now().toString(),
                                     "status": "pending"
                                   });
                                   if (response.statusCode == 200) {
+                                    Get.snackbar(
+                                      'success',
+                                      'in Cart',
+                                      backgroundColor: Colors.green,
+                                      colorText: Colors.white,
+                                    );
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              'Item added to cart successfully')),
+                                    Get.snackbar(
+                                      'Error',
+                                      'Already in Cart',
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
                                     );
                                   }
                                   print(response.body);
                                 },
-                                child: Container(
-                                  height: 50,
-                                  width: 320,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue[600],
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: const [BoxShadow()],
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Add To Cart',
-                                      style: TextStyle(
-                                        color: Colors.white,
+                                child: Flexible(
+                                  child: Container(
+                                    height: 40,
+                                    width: 300,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue[600],
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: const [BoxShadow()],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Add To Cart',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),

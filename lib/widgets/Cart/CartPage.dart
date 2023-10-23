@@ -16,20 +16,26 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.brown[300],
+        toolbarHeight: 45,
         bottomOpacity: 0.0,
-        elevation: 0.0,
+        elevation: 1.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(30),
+          ),
+        ),
         title: Text(
           "Cart",
           style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: Colors.grey[700]),
+              color: Colors.brown[50]),
         ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
-          icon: Icon(Icons.arrow_back, color: Colors.grey[700]),
+          icon: Icon(Icons.arrow_back, color: Colors.brown[50]),
         ),
       ),
       body: Column(

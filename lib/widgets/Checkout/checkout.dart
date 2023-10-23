@@ -1,6 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:petsecom/widgets/Cart/StoreCart.dart';
+import 'package:petsecom/widgets/Checkout/ItemOrder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckOut extends StatefulWidget {
@@ -186,20 +187,21 @@ class _CheckOutState extends State<CheckOut> {
                                 ),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
+                                      horizontal: 2, vertical: 2),
                                   child: Column(
                                     children: [
                                       Row(
                                         children: [
-                                          Container(
-                                            padding: EdgeInsets.only(left: 5),
-                                            child: Text(
-                                              'Detail Order',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
-                                            ),
-                                          ),
+                                          // Container(
+                                          //   padding: EdgeInsets.only(left: 5),
+                                          //   child: Text(
+                                          //     'Detail Order',
+                                          //     style: TextStyle(
+                                          //         fontWeight: FontWeight.bold,
+                                          //         fontSize: 16),
+                                          //   ),
+                                          // ),
+                                          ItemOrder(),
                                         ],
                                       ),
                                       SizedBox(

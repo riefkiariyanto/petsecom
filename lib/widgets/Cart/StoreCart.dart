@@ -47,6 +47,64 @@ class _StoreCartState extends State<StoreCart> {
     return storeTotal;
   }
 
+  Future<void> _deleteProductFromCart(String idCart) async {
+    final apiUrl = '${url}delete-cart/$idCart';
+
+    final response = await http.delete(
+      Uri.parse(apiUrl),
+    );
+    if (response.statusCode == 200) {
+      print('Product deleted successfully');
+      setState(() {});
+    } else {
+      print('Error deleting product');
+    }
+  }
+
+  Future<void> plusButtonProductQty(String cartId, int currentQty) async {
+    final urlQty = Uri.parse('${url}update-cart-quantity/$cartId');
+    int newQty = currentQty + 1;
+
+    try {
+      final response = await http.put(
+        urlQty,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: '{"qty": $newQty}',
+      );
+      if (response.statusCode == 200) {
+        setState(() {});
+      } else {
+        print('Gagal mengupdate qty: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Terjadi kesalahan: $e');
+    }
+  }
+
+  Future<void> minButtonProductQty(String cartId, int currentQty) async {
+    final urlQty = Uri.parse('${url}update-cart-quantity/$cartId');
+    int newQty = currentQty - 1;
+
+    try {
+      final response = await http.put(
+        urlQty,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: '{"qty": $newQty}',
+      );
+      if (response.statusCode == 200) {
+        setState(() {});
+      } else {
+        print('Gagal mengupdate qty: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Terjadi kesalahan: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -126,7 +184,7 @@ class _StoreCartState extends State<StoreCart> {
                                               product['product_name'];
                                           final productImage = product['image'];
                                           final productPrice = product['price'];
-                                          final productQty = product['qty'];
+                                          var productQty = product['qty'];
 
                                           return Container(
                                             padding: EdgeInsets.symmetric(
@@ -174,7 +232,7 @@ class _StoreCartState extends State<StoreCart> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            30),
+                                                                            15),
                                                                 image:
                                                                     DecorationImage(
                                                                   image: NetworkImage(
@@ -217,40 +275,8 @@ class _StoreCartState extends State<StoreCart> {
                                                                       return GestureDetector(
                                                                         onTap:
                                                                             () async {
-                                                                          var productIdToDelete =
-                                                                              product['id_cart'];
-
-                                                                          try {
-                                                                            var response =
-                                                                                await http.delete(
-                                                                              Uri.parse("$url/delete-cart/$productIdToDelete"),
-                                                                            );
-
-                                                                            if (response.statusCode ==
-                                                                                200) {
-                                                                              setState(() {
-                                                                                product['products'].removeAt(pIndex);
-                                                                              });
-                                                                              Get.snackbar(
-                                                                                'Success',
-                                                                                'Item deleted successfully',
-                                                                                backgroundColor: Colors.green,
-                                                                              );
-                                                                            } else {
-                                                                              Get.snackbar(
-                                                                                'Error',
-                                                                                'Failed to delete item',
-                                                                                backgroundColor: Colors.red,
-                                                                              );
-                                                                            }
-                                                                          } catch (e) {
-                                                                            print("Error: $e");
-                                                                            Get.snackbar(
-                                                                              'Error',
-                                                                              'An error occurred',
-                                                                              backgroundColor: Colors.red,
-                                                                            );
-                                                                          }
+                                                                          _deleteProductFromCart(
+                                                                              product['id_cart'].toString());
                                                                         },
                                                                         child:
                                                                             Container(
@@ -301,8 +327,11 @@ class _StoreCartState extends State<StoreCart> {
                                                                       Container(
                                                                         child:
                                                                             GestureDetector(
-                                                                          onTap: productQty >= 2
-                                                                              ? () {}
+                                                                          onTap: productQty > 1
+                                                                              ? () async {
+                                                                                  final cartId = product['id_cart'].toString();
+                                                                                  await minButtonProductQty(cartId, productQty);
+                                                                                }
                                                                               : null,
                                                                           child:
                                                                               Container(
@@ -341,7 +370,15 @@ class _StoreCartState extends State<StoreCart> {
                                                                       ),
                                                                       GestureDetector(
                                                                         onTap:
-                                                                            () {},
+                                                                            () async {
+                                                                          final cartId =
+                                                                              product['id_cart'].toString();
+                                                                          final currentQty =
+                                                                              product['qty'];
+                                                                          await plusButtonProductQty(
+                                                                              cartId,
+                                                                              currentQty);
+                                                                        },
                                                                         child:
                                                                             Container(
                                                                           width:

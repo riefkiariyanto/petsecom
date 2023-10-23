@@ -41,11 +41,8 @@ class _CartButtonState extends State<CartButton> {
         headers: {"Content-Type": "application/json"});
 
     if (response.statusCode == 200) {
-      setState(() {
-        qty++;
-      });
-      widget
-          .onQuantityChanged(qty); // Notify the parent widget about the change
+      setState(() {});
+      widget.onQuantityChanged(qty);
     } else {
       // Handle error, e.g., update failed
     }

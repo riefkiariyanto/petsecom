@@ -44,20 +44,6 @@ class CartIcon extends StatelessWidget {
     }
   }
 
-  void startDataPolling() {
-    const pollingInterval =
-        Duration(seconds: 5); // Adjust the polling interval as needed
-
-    Timer.periodic(pollingInterval, (Timer timer) async {
-      try {
-        final totalProducts = await fetchTotalProductsByUserId();
-        _totalProductsController.sink.add(totalProducts);
-      } catch (e) {
-        print('Error polling data: $e');
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<int>(

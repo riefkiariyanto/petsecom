@@ -72,7 +72,6 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  // Navigate to the product detail page with the product's ID
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -124,6 +123,8 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                   style: TextStyle(
                                     fontSize: 10,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 10,
                                 ),
                               ),
                               Padding(

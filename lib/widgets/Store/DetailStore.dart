@@ -325,7 +325,7 @@ class _DetailStoreState extends State<DetailStore> {
                                                       },
                                                       child: Container(
                                                         height: 30,
-                                                        width: 135,
+                                                        width: 115,
                                                         decoration:
                                                             BoxDecoration(
                                                           color: Colors.white,
