@@ -455,7 +455,11 @@ class _StoreCartState extends State<StoreCart> {
                                           onTap: () {
                                             Navigator.of(context)
                                                 .push(MaterialPageRoute(
-                                              builder: (context) => CheckOut(),
+                                              builder: (context) => CheckOut(
+                                                storeName: storeName,
+                                                storeTotal: calculateStoreTotal(
+                                                    products),
+                                              ),
                                             ));
                                           },
                                           child: Container(

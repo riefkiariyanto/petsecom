@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:petsecom/widgets/Cart/StoreCart.dart';
 import 'package:petsecom/widgets/Checkout/ItemOrder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckOut extends StatefulWidget {
-  const CheckOut({super.key});
+  final String storeName;
+  final double storeTotal;
 
+  const CheckOut({Key? key, required this.storeName, required this.storeTotal})
+      : super(key: key);
   @override
   State<CheckOut> createState() => _CheckOutState();
 }
@@ -192,24 +194,13 @@ class _CheckOutState extends State<CheckOut> {
                                     children: [
                                       Row(
                                         children: [
-                                          // Container(
-                                          //   padding: EdgeInsets.only(left: 5),
-                                          //   child: Text(
-                                          //     'Detail Order',
-                                          //     style: TextStyle(
-                                          //         fontWeight: FontWeight.bold,
-                                          //         fontSize: 16),
-                                          //   ),
-                                          // ),
-                                          ItemOrder(),
+                                          ItemOrder(
+                                              storeName: widget.storeName),
                                         ],
                                       ),
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Row(
-                                          // children: [CartItem()],
-                                          )
                                     ],
                                   ),
                                 ),
@@ -256,7 +247,7 @@ class _CheckOutState extends State<CheckOut> {
                                       color: Colors.grey[100]),
                                 ),
                                 Text(
-                                  'Rp 300.000',
+                                  'Rp ${widget.storeTotal.toStringAsFixed(0)}', // Use the received store total
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 19,
