@@ -12,13 +12,14 @@ import '../../Constants/constants.dart';
 class CheckOut extends StatefulWidget {
   final String storeName;
   final double storeTotal;
-
+  final int idClient;
+  final int idCart;
   CheckOut({
-    Key? key,
     required this.storeName,
     required this.storeTotal,
-  }) : super(key: key);
-
+    required this.idClient,
+    required this.idCart,
+  });
   @override
   State<CheckOut> createState() => _CheckOutState();
 }
@@ -34,7 +35,6 @@ class _CheckOutState extends State<CheckOut> {
 
   Future<void> postTransaction(Map<String, dynamic> transactionData) async {
     final apiUrl = '${url}add-transaction';
-
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -333,20 +333,14 @@ class _CheckOutState extends State<CheckOut> {
                               onTap: () {
                                 Map<String, dynamic> transactionData = {
                                   'code': randomCode,
-                                  'id_cart': '253',
-                                  'id_client': '6',
+                                  'id_cart': widget.idCart.toString(),
+                                  'id_client': widget.idClient.toString(),
                                   'id_user': snapshot.data['user']['id'],
                                   'status': 'pending',
                                   'date': DateTime.now().toString(),
                                 };
                                 postTransaction(transactionData);
                               },
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => PaymentPage()),
-                              //   );
-                              // },
                               child: Container(
                                 height: 40,
                                 width: 80,

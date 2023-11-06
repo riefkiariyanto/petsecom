@@ -27,7 +27,6 @@ class _StoreCartState extends State<StoreCart> {
       List<Map<String, dynamic>> cartList =
           List<Map<String, dynamic>>.from(data['data']);
 
-      // Filter the cart list based on userID
       List<Map<String, dynamic>> filteredCartList =
           cartList.where((cartItem) => cartItem['id_user'] == userID).toList();
 
@@ -459,6 +458,10 @@ class _StoreCartState extends State<StoreCart> {
                                                 storeName: storeName,
                                                 storeTotal: calculateStoreTotal(
                                                     products),
+                                                idClient: cartData[index]
+                                                    ['id_client'],
+                                                idCart: cartData[index]
+                                                    ['products'][0]['id_cart'],
                                               ),
                                             ));
                                           },
