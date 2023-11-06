@@ -1,24 +1,57 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:petsecom/widgets/Checkout/EditShipping.dart';
 import 'package:petsecom/widgets/Checkout/ItemOrder.dart';
+import 'package:petsecom/widgets/Checkout/PaymentPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:random_string/random_string.dart';
+
+import '../../Constants/constants.dart';
 
 class CheckOut extends StatefulWidget {
   final String storeName;
   final double storeTotal;
 
-  const CheckOut({Key? key, required this.storeName, required this.storeTotal})
-      : super(key: key);
+  CheckOut({
+    Key? key,
+    required this.storeName,
+    required this.storeTotal,
+  }) : super(key: key);
+
   @override
   State<CheckOut> createState() => _CheckOutState();
 }
 
 class _CheckOutState extends State<CheckOut> {
+  Map<String, dynamic> userData = {};
   Future getUser() async {
     final prefs = await SharedPreferences.getInstance();
     String _data;
     _data = prefs.getString('_data') ?? '';
     return json.decode(_data);
+  }
+
+  Future<void> postTransaction(Map<String, dynamic> transactionData) async {
+    final apiUrl = '${url}add-transaction';
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(transactionData),
+    );
+
+    if (response.statusCode == 200) {
+      print('Transaction was successful');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PaymentPage()),
+      );
+    } else {
+      print('Transaction failed with status code: ${response.statusCode}');
+    }
   }
 
   bool isChecked = false;
@@ -33,6 +66,23 @@ class _CheckOutState extends State<CheckOut> {
     }
     return Colors.green;
   }
+
+  Future<void> saveAddressToSharedPreferences(
+      Map<String, dynamic> addressData) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userData = prefs.getString('_data');
+
+    Map<String, dynamic> userDataMap = json.decode(userData!);
+
+    userDataMap['user']['name'] = addressData['name'];
+    userDataMap['user']['address'] = addressData['address'];
+    userDataMap['user']['phone'] = addressData['phone'];
+
+    final updatedUserData = json.encode(userDataMap);
+    prefs.setString('_data', updatedUserData);
+  }
+
+  String randomCode = randomAlpha(3) + randomNumeric(2);
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +141,31 @@ class _CheckOutState extends State<CheckOut> {
                                     Spacer(),
                                     Container(
                                       child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return EditShipping(
+                                                initialData: {
+                                                  'name': snapshot.data['user']
+                                                      ['name'],
+                                                  'address': snapshot
+                                                      .data['user']['address'],
+                                                  'phone': snapshot.data['user']
+                                                      ['phone'],
+                                                },
+                                                onAddressSaved: (newAddress) {
+                                                  saveAddressToSharedPreferences(
+                                                      newAddress);
+
+                                                  setState(() {});
+                                                },
+                                              );
+                                            },
+                                          );
+                                        },
                                         child: Text(
-                                          'New Shipping Addreess',
+                                          'Edit Shipping Addreess',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 12,
@@ -195,7 +267,8 @@ class _CheckOutState extends State<CheckOut> {
                                       Row(
                                         children: [
                                           ItemOrder(
-                                              storeName: widget.storeName),
+                                            storeName: widget.storeName,
+                                          ),
                                         ],
                                       ),
                                       SizedBox(
@@ -247,7 +320,7 @@ class _CheckOutState extends State<CheckOut> {
                                       color: Colors.grey[100]),
                                 ),
                                 Text(
-                                  'Rp ${widget.storeTotal.toStringAsFixed(0)}', // Use the received store total
+                                  'Rp ${widget.storeTotal.toStringAsFixed(0)}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 19,
@@ -256,26 +329,45 @@ class _CheckOutState extends State<CheckOut> {
                               ],
                             ),
                             Spacer(),
-                            Container(
-                              height: 40,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.orange[700],
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      blurRadius: 1,
-                                      offset: Offset(0.0, 0.75)),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'CeckOut',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white),
+                            GestureDetector(
+                              onTap: () {
+                                Map<String, dynamic> transactionData = {
+                                  'code': randomCode,
+                                  'id_cart': '253',
+                                  'id_client': '6',
+                                  'id_user': snapshot.data['user']['id'],
+                                  'status': 'pending',
+                                  'date': DateTime.now().toString(),
+                                };
+                                postTransaction(transactionData);
+                              },
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => PaymentPage()),
+                              //   );
+                              // },
+                              child: Container(
+                                height: 40,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.orange[700],
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 1,
+                                        offset: Offset(0.0, 0.75)),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'CeckOut',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.white),
+                                  ),
                                 ),
                               ),
                             )

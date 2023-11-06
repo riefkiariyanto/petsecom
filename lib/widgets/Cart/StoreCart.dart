@@ -491,8 +491,7 @@ class _StoreCartState extends State<StoreCart> {
                           ),
                         ),
                       );
-                    } // use it
-                    );
+                    });
               }
             }),
       ),
