@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:petsecom/widgets/Checkout/EditShipping.dart';
-import 'package:petsecom/widgets/Checkout/ItemOrder.dart';
-import 'package:petsecom/widgets/Checkout/PaymentPage.dart';
+import 'package:petsecom/widgets/CheckoutPayment/EditShipping.dart';
+import 'package:petsecom/widgets/CheckoutPayment/ItemOrder.dart';
+import 'package:petsecom/widgets/CheckoutPayment/PaymentPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:random_string/random_string.dart';
@@ -13,12 +13,12 @@ class CheckOut extends StatefulWidget {
   final String storeName;
   final double storeTotal;
   final int idClient;
-  final int idCart;
+  final List<int> idCarts;
   CheckOut({
     required this.storeName,
     required this.storeTotal,
     required this.idClient,
-    required this.idCart,
+    required this.idCarts,
   });
   @override
   State<CheckOut> createState() => _CheckOutState();
@@ -33,38 +33,43 @@ class _CheckOutState extends State<CheckOut> {
     return json.decode(_data);
   }
 
-  Future<void> postTransaction(Map<String, dynamic> transactionData) async {
-    final apiUrl = '${url}add-transaction';
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(transactionData),
-    );
+  Future<void> postTransactions(List<int> idCarts, int idClient) async {
+    String randomCode = randomAlpha(3) + randomNumeric(2);
+    final prefs = await SharedPreferences.getInstance();
+    String _data = prefs.getString('_data') ?? '';
+    Map<String, dynamic> userData = json.decode(_data);
 
-    if (response.statusCode == 200) {
-      print('Transaction was successful');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => PaymentPage()),
+    for (var idCart in idCarts) {
+      final apiUrl = '${url}add-transaction';
+      final transactionData = {
+        'code': randomCode,
+        'id_cart': idCart.toString(),
+        'id_client': idClient.toString(),
+        'id_user': userData['user']['id'].toString(),
+        'status': 'pending',
+        'date': DateTime.now().toString(),
+      };
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(transactionData),
       );
-    } else {
-      print('Transaction failed with status code: ${response.statusCode}');
-    }
-  }
 
-  bool isChecked = false;
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.hovered,
-      MaterialState.focused,
-    };
-    if (states.any(interactiveStates.contains)) {
-      return Colors.grey;
+      if (response.statusCode == 200) {
+        print('Transaction for idCart $idCart was successful');
+      } else {
+        print(
+            'Transaction for idCart $idCart failed with status code: ${response.statusCode}');
+      }
     }
-    return Colors.green;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PaymentPage()),
+    );
   }
 
   Future<void> saveAddressToSharedPreferences(
@@ -81,8 +86,6 @@ class _CheckOutState extends State<CheckOut> {
     final updatedUserData = json.encode(userDataMap);
     prefs.setString('_data', updatedUserData);
   }
-
-  String randomCode = randomAlpha(3) + randomNumeric(2);
 
   @override
   Widget build(BuildContext context) {
@@ -214,18 +217,6 @@ class _CheckOutState extends State<CheckOut> {
                                                 snapshot.data['user']
                                                     ['address'],
                                               )),
-                                          Spacer(),
-                                          Checkbox(
-                                            checkColor: Colors.white,
-                                            fillColor: MaterialStateProperty
-                                                .resolveWith(getColor),
-                                            value: isChecked,
-                                            onChanged: (bool? value) {
-                                              setState(() {
-                                                isChecked = value!;
-                                              });
-                                            },
-                                          ),
                                         ],
                                       ),
                                       SizedBox(
@@ -331,15 +322,8 @@ class _CheckOutState extends State<CheckOut> {
                             Spacer(),
                             GestureDetector(
                               onTap: () {
-                                Map<String, dynamic> transactionData = {
-                                  'code': randomCode,
-                                  'id_cart': widget.idCart.toString(),
-                                  'id_client': widget.idClient.toString(),
-                                  'id_user': snapshot.data['user']['id'],
-                                  'status': 'pending',
-                                  'date': DateTime.now().toString(),
-                                };
-                                postTransaction(transactionData);
+                                postTransactions(
+                                    widget.idCarts, widget.idClient);
                               },
                               child: Container(
                                 height: 40,

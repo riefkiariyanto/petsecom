@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petsecom/widgets/Checkout/checkout.dart';
+import 'package:petsecom/widgets/CheckoutPayment/checkout.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:get/get.dart';
@@ -114,7 +114,7 @@ class _StoreCartState extends State<StoreCart> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
-                ); // Show a loading indicator
+                );
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
@@ -452,6 +452,18 @@ class _StoreCartState extends State<StoreCart> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
+                                            List<int> idCarts = [];
+                                            for (var product in cartData[index]
+                                                ['products']) {
+                                              if (product['id_cart'] is int) {
+                                                idCarts.add(product['id_cart']);
+                                              } else if (product['id_cart']
+                                                  is String) {
+                                                idCarts.add(int.parse(
+                                                    product['id_cart']));
+                                              }
+                                            }
+
                                             Navigator.of(context)
                                                 .push(MaterialPageRoute(
                                               builder: (context) => CheckOut(
@@ -460,8 +472,7 @@ class _StoreCartState extends State<StoreCart> {
                                                     products),
                                                 idClient: cartData[index]
                                                     ['id_client'],
-                                                idCart: cartData[index]
-                                                    ['products'][0]['id_cart'],
+                                                idCarts: idCarts,
                                               ),
                                             ));
                                           },

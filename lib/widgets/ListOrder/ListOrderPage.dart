@@ -50,11 +50,13 @@ class _ListOrderState extends State<ListOrder> {
           icon: Icon(Icons.arrow_back, color: Colors.grey[700]),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          StoreOrder(),
-        ],
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            StoreOrder(),
+          ],
+        ),
       ),
     );
   }
