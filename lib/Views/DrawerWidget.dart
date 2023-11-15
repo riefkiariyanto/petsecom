@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:petsecom/widgets/Gmaps/MapsFix.dart';
+import 'package:petsecom/widgets/Gmaps/TetsMaps.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'LoginPage.dart';
@@ -21,6 +21,7 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.brown.shade50,
       child: ListView(
         // Remove padding
         padding: EdgeInsets.zero,
@@ -42,7 +43,7 @@ class DrawerWidget extends StatelessWidget {
                     ),
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.brown.shade400,
                     image: DecorationImage(
                       fit: BoxFit.contain,
                       image: AssetImage("images/dogb.png"),
@@ -51,8 +52,8 @@ class DrawerWidget extends StatelessWidget {
                 );
               }),
           ListTile(
-              leading: Icon(Icons.map_outlined),
-              title: Text('Maps'),
+              leading: Icon(Icons.description_rounded),
+              title: Text('SearchList'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => SearchList(
@@ -65,13 +66,9 @@ class DrawerWidget extends StatelessWidget {
               title: Text('Maps'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MapsFix(),
+                  builder: (context) => TestMaps(),
                 ));
               }),
-          ListTile(
-              leading: Icon(Icons.notifications),
-              title: Text('Request'),
-              onTap: () {}),
           Divider(),
           ListTile(
               leading: Icon(Icons.settings),
@@ -79,7 +76,7 @@ class DrawerWidget extends StatelessWidget {
               onTap: () {}),
           ListTile(
             leading: Icon(Icons.description),
-            title: Text('Policies'),
+            title: Text('Logout'),
             onTap: () async {
               final SharedPreferences sharedPreferences =
                   await SharedPreferences.getInstance();

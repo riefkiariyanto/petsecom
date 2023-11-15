@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:petsecom/Views/ImageSlider.dart';
 import 'package:petsecom/widgets/product/ItemsWidget.dart';
 import 'package:petsecom/Views/DrawerWidget.dart';
 import '../Controllers/MapsController.dart';
@@ -95,33 +96,28 @@ class _FirtsPageState extends State<FirtsPage> {
                 ],
               ),
               body: ListView(
-                padding: EdgeInsets.all(16),
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        controller.address.value,
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[800]),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.blue[400],
-                          borderRadius: BorderRadius.circular(20),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        child: Text(
+                          controller.address.value,
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[800]),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
+                      Container(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: MyImageSlider(),
                       ),
                       Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         height: 50,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -132,25 +128,25 @@ class _FirtsPageState extends State<FirtsPage> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'New Items ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                        child: Text(
+                          'New Items ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ItemsWidget(),
+                      Container(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: ItemsWidget()),
                     ],
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 70,
                   )
                 ],
               ),

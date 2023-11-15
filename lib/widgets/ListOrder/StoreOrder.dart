@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:petsecom/widgets/ListOrder/StatusOrder/StatusDetailOrder.dart';
 import '../../Constants/constants.dart';
 import '../../Controllers/auth.dart';
-import 'ItemOrder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -113,9 +113,9 @@ class _StoreOrderState extends State<StoreOrder> {
                                           EdgeInsets.only(right: 35, top: 10),
                                       child: Container(
                                         child: Text(
-                                          'Order ID: $orderID',
+                                          'Code : $orderID',
                                           style: TextStyle(
-                                              color: Colors.grey,
+                                              color: Colors.blue,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 10),
                                         ),
@@ -310,7 +310,16 @@ class _StoreOrderState extends State<StoreOrder> {
                                     Row(
                                       children: [
                                         GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            String orderCode =
+                                                cartData[index]['code'];
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                              builder: (context) =>
+                                                  StatusDetailOrder(
+                                                      orderCode: orderCode),
+                                            ));
+                                          },
                                           child: Container(
                                             padding: EdgeInsets.all(10),
                                             margin: EdgeInsets.symmetric(

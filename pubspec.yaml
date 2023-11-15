@@ -55,6 +55,9 @@ dependencies:
   provider: ^6.0.5
   fluttertoast: ^8.2.2
   random_string: ^2.2.0
+  intl: ^0.18.1
+  carousel_slider: ^4.2.1
+  dots_indicator: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -89,7 +92,9 @@ flutter:
     - images/dogb.png
     - images/listPic.jpeg
     - images/LogoApps.png
-
+    - images/banner1.jpg
+    - images/banner2.jpg
+    - images/banner3.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

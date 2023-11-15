@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../Views/HomePage.dart';
+
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
 
@@ -24,7 +26,12 @@ class _PaymentPageState extends State<PaymentPage> {
         ),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
           icon: Icon(Icons.arrow_back, color: Colors.grey[700]),
         ),
       ),

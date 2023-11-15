@@ -7,18 +7,18 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../Constants/constants.dart';
 import 'package:petsecom/Controllers/auth.dart';
 
-class ItemOrder extends StatefulWidget {
+class ItemCartDetail extends StatefulWidget {
   final String storeName;
 
-  ItemOrder({
+  ItemCartDetail({
     Key? key,
     required this.storeName,
   }) : super(key: key);
   @override
-  State<ItemOrder> createState() => _ItemOrderState();
+  State<ItemCartDetail> createState() => _ItemCartDetailState();
 }
 
-class _ItemOrderState extends State<ItemOrder> {
+class _ItemCartDetailState extends State<ItemCartDetail> {
   Future<List<dynamic>> fetchCartData() async {
     final urlCart = '${url}list-cart';
     final authController = Get.find<AuthController>();
@@ -51,7 +51,7 @@ class _ItemOrderState extends State<ItemOrder> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
-                ); // Show a loading indicator
+                );
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {

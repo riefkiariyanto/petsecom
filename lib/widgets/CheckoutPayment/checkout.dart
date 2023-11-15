@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:petsecom/widgets/CheckoutPayment/EditShipping.dart';
-import 'package:petsecom/widgets/CheckoutPayment/ItemOrder.dart';
+import 'package:petsecom/widgets/CheckoutPayment/ItemCartDetail.dart';
 import 'package:petsecom/widgets/CheckoutPayment/PaymentPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -257,7 +257,7 @@ class _CheckOutState extends State<CheckOut> {
                                     children: [
                                       Row(
                                         children: [
-                                          ItemOrder(
+                                          ItemCartDetail(
                                             storeName: widget.storeName,
                                           ),
                                         ],
