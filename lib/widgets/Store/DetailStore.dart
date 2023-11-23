@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants/constants.dart';
 import '../Cart/CartPage.dart';
+import '../Gmaps/TetsMaps.dart';
 import '../product/ProductDetail.dart';
 
 class DetailStore extends StatefulWidget {
@@ -192,12 +194,23 @@ class _DetailStoreState extends State<DetailStore> {
                                     ],
                                   ),
                                   Spacer(),
-                                  CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Colors.grey[100],
-                                    child: Icon(
-                                      CupertinoIcons.chat_bubble,
-                                      size: 20,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              TestMaps(),
+                                        ),
+                                      );
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: Colors.grey[100],
+                                      child: Icon(
+                                        CupertinoIcons.location_north,
+                                        size: 20,
+                                      ),
                                     ),
                                   ),
                                 ],

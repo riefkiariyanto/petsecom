@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:petsecom/widgets/product/ProductDetail.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 import '../../Constants/constants.dart';
 
@@ -134,7 +135,8 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Rp${snapshot.data['data'][i]['price']}',
+                                      'Rp${NumberFormat.decimalPattern().format(int.parse(snapshot.data['data'][i]['price']))}'
+                                          .replaceAll(',', '.'),
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
@@ -172,10 +174,11 @@ class _ItemsWidgetState extends State<ItemsWidget> {
                                           );
                                         } else {
                                           Get.snackbar(
-                                            'Error',
-                                            'Already in Cart',
-                                            backgroundColor: Colors.red,
+                                            'Already',
+                                            'in Cart',
+                                            backgroundColor: Colors.blue,
                                             colorText: Colors.white,
+                                            snackPosition: SnackPosition.BOTTOM,
                                           );
                                         }
                                         print(response.body);

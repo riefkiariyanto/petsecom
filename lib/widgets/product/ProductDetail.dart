@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../Constants/constants.dart';
 import '../../Controllers/MapsController.dart';
 import '../Store/DetailStore.dart';
@@ -71,7 +72,7 @@ class _ProductDetailState extends State<ProductDetail> {
       body: Stack(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             child: Column(
               children: [
                 FutureBuilder(
@@ -88,7 +89,6 @@ class _ProductDetailState extends State<ProductDetail> {
                         var productData = snapshot.data['data'].firstWhere(
                             (item) => item['id'] == widget.productId,
                             orElse: () => null);
-
                         if (productData == null) {
                           return Center(child: Text("Product not found"));
                         }
@@ -164,8 +164,23 @@ class _ProductDetailState extends State<ProductDetail> {
                 }
                 var shopData = productData['shop'];
 
+                void _launchWhatsApp() async {
+                  final phoneNumber = '${shopData['no_telp']}';
+                  final message =
+                      'Hallo admin "${shopData['store_name']}" , saya mau menanyakan';
+
+                  final whatsappUrl =
+                      'https://wa.me/$phoneNumber?text=${Uri.parse(message)}';
+
+                  if (await canLaunch(whatsappUrl)) {
+                    await launch(whatsappUrl);
+                  } else {
+                    print('Could not launch $whatsappUrl');
+                  }
+                }
+
                 return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -242,13 +257,14 @@ class _ProductDetailState extends State<ProductDetail> {
                         ),
                         Row(
                           children: [
-                            CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors
-                                  .white, // Mengatur warna latar belakang menjadi putih
-
-                              backgroundImage: NetworkImage(
-                                  "${urlImage}storage/${shopData['logo']}"),
+                            GestureDetector(
+                              onTap: () {},
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.white,
+                                backgroundImage: NetworkImage(
+                                    "${urlImage}storage/${shopData['logo']}"),
+                              ),
                             ),
                             SizedBox(
                               width: 5,
@@ -261,7 +277,6 @@ class _ProductDetailState extends State<ProductDetail> {
                                       onTap: () {
                                         int idClient = shopData['id_clients'];
                                         print('id_clients: $idClient');
-
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -297,13 +312,18 @@ class _ProductDetailState extends State<ProductDetail> {
                               ],
                             ),
                             Spacer(),
-                            CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.grey[200],
-                              child: Icon(
-                                CupertinoIcons.chat_bubble,
-                                size: 20,
-                                color: Colors.blue,
+                            GestureDetector(
+                              onTap: () {
+                                _launchWhatsApp();
+                              },
+                              child: CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.grey[200],
+                                child: Icon(
+                                  CupertinoIcons.chat_bubble,
+                                  size: 20,
+                                  color: Colors.blue,
+                                ),
                               ),
                             ),
                           ],

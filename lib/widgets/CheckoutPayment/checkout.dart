@@ -14,6 +14,7 @@ class CheckOut extends StatefulWidget {
   final double storeTotal;
   final int idClient;
   final List<int> idCarts;
+
   CheckOut({
     required this.storeName,
     required this.storeTotal,
@@ -68,7 +69,10 @@ class _CheckOutState extends State<CheckOut> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PaymentPage()),
+      MaterialPageRoute(
+          builder: (context) => PaymentPage(
+                filterCode: randomCode,
+              )),
     );
   }
 

@@ -4,10 +4,12 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Constants/constants.dart';
+import '../../Controllers/MapsController.dart';
 
 class TestMaps extends StatefulWidget {
   const TestMaps({Key? key}) : super(key: key);
@@ -17,10 +19,11 @@ class TestMaps extends StatefulWidget {
 }
 
 class _TestMapsState extends State<TestMaps> {
+  var controller = Get.put(MapsController());
+
   GoogleMapController? _controller;
   LatLng? _userLocation;
   List<Map<String, dynamic>> storeData = [];
-  Polyline? _polyline;
 
   @override
   void initState() {
@@ -149,6 +152,7 @@ class _TestMapsState extends State<TestMaps> {
                                 BitmapDescriptor.hueAzure),
                             infoWindow: InfoWindow(
                               title: 'Your Location',
+                              snippet: controller.address.value,
                             ),
                           ),
                           for (var store in storeData)
@@ -202,62 +206,68 @@ class _TestMapsState extends State<TestMaps> {
   }
 
   Widget _buildStoreBox(dynamic store) {
-    return Container(
-      height: 20,
-      width: 80,
-      padding: EdgeInsets.symmetric(vertical: 2),
+    return GestureDetector(
+      onTap: () {
+        _navigateToStoreLocation(store['location']);
+        _controller?.showMarkerInfoWindow(MarkerId(store['id'].toString()));
+      },
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 1,
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
+        height: 20,
+        width: 80,
+        padding: EdgeInsets.symmetric(vertical: 2),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 1,
               ),
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    "${urlImage}storage/${store['logo']}",
+            ],
+          ),
+          child: Column(
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      "${urlImage}storage/${store['logo']}",
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(2),
-              child: Text(
-                store['name'],
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
+              Container(
+                padding: EdgeInsets.all(2),
+                child: Text(
+                  store['name'],
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              child: Text(
-                '${_calculateDistance(_userLocation!, store['location']).toStringAsFixed(2)} km',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 9,
-                  fontWeight: FontWeight.bold,
+              Container(
+                child: Text(
+                  '${_calculateDistance(_userLocation!, store['location']).toStringAsFixed(2)} km',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 9,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

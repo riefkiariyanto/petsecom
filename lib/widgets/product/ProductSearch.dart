@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants/constants.dart';
-import '../../Views/DrawerWidget.dart';
 import '../Cart/CartPage.dart';
 import 'ProductDetail.dart';
 

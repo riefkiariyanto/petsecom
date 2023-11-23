@@ -9,6 +9,7 @@ import 'package:petsecom/widgets/ListOrder/StatusOrder/ItemOrdeStatus.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../Controllers/auth.dart';
+import '../../CheckoutPayment/PaymentPage.dart';
 
 class StatusDetailOrder extends StatefulWidget {
   final String orderCode;
@@ -260,13 +261,21 @@ class _StatusDetailOrderState extends State<StatusDetailOrder> {
                               ),
                               Spacer(),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PaymentPage(
+                                              filterCode: widget.orderCode,
+                                            )),
+                                  );
+                                },
                                 child: Container(
                                   height: 40,
                                   width: 80,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Colors.orange[700],
+                                    color: Colors.deepOrange[700],
                                     boxShadow: [
                                       BoxShadow(
                                           color: Colors.black.withOpacity(0.1),
@@ -276,7 +285,7 @@ class _StatusDetailOrderState extends State<StatusDetailOrder> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'CeckOut',
+                                      'payment',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,

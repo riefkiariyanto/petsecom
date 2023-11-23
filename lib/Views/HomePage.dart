@@ -5,7 +5,6 @@ import 'package:line_icons/line_icons.dart';
 import 'package:petsecom/Views/FirstPage.dart';
 import 'package:petsecom/Views/ProfilePage.dart';
 import 'package:petsecom/widgets/product/ProductSearch.dart';
-
 import '../widgets/ListOrder/ListOrderPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,8 +36,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.transparent,
       body: pages[_selectedIndex],
       resizeToAvoidBottomInset: false,
-
-      // Floating Action Button (Floating Navigation Bar)
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(20.0), // Adjust the padding as needed

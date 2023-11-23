@@ -4,5 +4,5 @@
 // const String url = 'http://192.168.1.89:80/api/';
 // const String urlImage = 'http://192.168.1.89:80/';
 
-const String url = 'http://192.168.1.89/api/';
-const String urlImage = 'http://192.168.1.89:80/';
+const String url = 'http://192.168.0.101/api/';
+const String urlImage = 'http://192.168.0.101:80/';

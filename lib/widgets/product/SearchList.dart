@@ -172,7 +172,7 @@ class _SearchListState extends State<SearchList> {
                   Column(
                     children: [
                       Container(
-                        width: 270,
+                        width: 220,
                         child: Text(
                           _filteredProducts[index]['name'],
                           style: TextStyle(
@@ -182,7 +182,7 @@ class _SearchListState extends State<SearchList> {
                         ),
                       ),
                       Container(
-                        width: 270,
+                        width: 200,
                         child: Text(
                           _filteredProducts[index]['category'],
                           style: TextStyle(

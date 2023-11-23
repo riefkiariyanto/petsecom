@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:petsecom/widgets/CheckoutPayment/PaymentPage.dart';
 import 'package:petsecom/widgets/Gmaps/TetsMaps.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -73,7 +74,11 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
-              onTap: () {}),
+              onTap: () {
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (context) => PaymentPage(),
+                // ));
+              }),
           ListTile(
             leading: Icon(Icons.description),
             title: Text('Logout'),

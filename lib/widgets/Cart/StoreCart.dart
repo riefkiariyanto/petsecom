@@ -268,39 +268,39 @@ class _StoreCartState extends State<StoreCart> {
                                                                     margin: EdgeInsets.only(
                                                                         bottom:
                                                                             15),
-                                                                    child: FutureBuilder(builder:
-                                                                        (context,
-                                                                            snapshot) {
-                                                                      return GestureDetector(
-                                                                        onTap:
-                                                                            () async {
-                                                                          _deleteProductFromCart(
-                                                                              product['id_cart'].toString());
-                                                                        },
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              20,
-                                                                          height:
-                                                                              20,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Colors.red[400],
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(4),
-                                                                          ),
+                                                                    child:
+                                                                        FutureBuilder(
+                                                                      builder:
+                                                                          (context,
+                                                                              snapshot) {
+                                                                        return GestureDetector(
+                                                                          onTap:
+                                                                              () async {
+                                                                            _deleteProductFromCart(product['id_cart'].toString());
+                                                                          },
                                                                           child:
-                                                                              Icon(
-                                                                            Icons.delete,
-                                                                            color:
-                                                                                Colors.white,
-                                                                            size:
-                                                                                15,
+                                                                              Container(
+                                                                            width:
+                                                                                20,
+                                                                            height:
+                                                                                20,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: Colors.red[400],
+                                                                              borderRadius: BorderRadius.circular(4),
+                                                                            ),
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.delete,
+                                                                              color: Colors.white,
+                                                                              size: 15,
+                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                      );
-                                                                    }),
+                                                                        );
+                                                                      },
+                                                                      future:
+                                                                          null,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
